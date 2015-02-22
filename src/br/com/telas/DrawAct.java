@@ -73,45 +73,42 @@ public class DrawAct extends Activity implements OnClickListener {
 
 				if (event.getAction() == MotionEvent.ACTION_MOVE) {
 
-					DrawAct.this.mTextView.setText("posição do click eixo X"
-							+ event.getX() + "posicacao do click eixo Y"
-							+ event.getY() + " posicao x do objeto "
-							+ DrawAct.this.mImageView.getX()
-							+ " posicao y do objeto "
-							+ DrawAct.this.mImageView.getY()
-							+ " altura do objeto"
-							+ DrawAct.this.mImageView.getHeight()
-							+ " largura do objeto"
-							+ DrawAct.this.mImageView.getWidth()
-							+ " Metade da largura do objeto "
-							+ DrawAct.this.mImageView.getWidth() / 2
-							+ " Metade de altura do objeto "
-							+ DrawAct.this.mImageView.getHeight() / 2
-							
-							+ " Calculo de velocidade");
-
-					int velocidade = 20;
+					DrawAct.this.mTextView.setText("valor de x "+
+							x + " valor da metade do objeto" + DrawAct.this.mImageView.getWidth() / 2  + 
+							" distância entre objetos " + 
+							(x - (DrawAct.this.mImageView.getWidth() / 2 )));
+					
+					int velocidade = 0;
+					int velocidadeY =  0;
+					if (x > 0){
+						velocidade = (x - (DrawAct.this.mImageView.getWidth() / 2 ));
+					}else{
+						velocidade *= -1 ;
+					}
+					if (y > 0){
+						velocidadeY = (y - (DrawAct.this.mImageView.getHeight() / 2 ));
+					}else{
+						velocidadeY *= -1 ;
+					}
 					
 					
-					double largura_objeto = DrawAct.this.mImageView.getWidth() / 2;
-
-					if ((x + (x * 0.15)) > largura_objeto) {
+					if (x > DrawAct.this.mImageView.getWidth() / 2) {
 						DrawAct.this.mImageView.setX(DrawAct.this.mImageView
 								.getX() + velocidade);
 					}
-					if ((x - (x * 0.15)) < largura_objeto) {
+					if (x < DrawAct.this.mImageView.getWidth() / 2) {
 						DrawAct.this.mImageView.setX(DrawAct.this.mImageView
-								.getX() - velocidade);
+								.getX() - (-velocidade));
 					}
 					
-					if ((y - (y * 0.15)) > DrawAct.this.mImageView.getHeight() / 2) {
+					if (y > DrawAct.this.mImageView.getHeight() / 2) {
 						DrawAct.this.mImageView.setY(DrawAct.this.mImageView
-								.getY() + velocidade);
+								.getY() + velocidadeY);
 					}
 					
-					if ((y + (y * 0.15)) < DrawAct.this.mImageView.getHeight() / 2) {
+					if (y < DrawAct.this.mImageView.getHeight() / 2) {
 						DrawAct.this.mImageView.setY(DrawAct.this.mImageView
-								.getY() - velocidade);
+								.getY() - (-velocidadeY));
 					}
 	
 
