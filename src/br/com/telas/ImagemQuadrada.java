@@ -2,19 +2,27 @@ package br.com.telas;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.os.Build;
+import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
 
 public class ImagemQuadrada extends View implements OnClickListener {
 
-	public ImagemQuadrada(Activity context, int in, LayoutParams params) {
+	public ImagemQuadrada(Context context, AttributeSet attrs, int defStyleAttr) {
+		super(context, attrs, defStyleAttr);
+		this.setOnClickListener(this);
+	}
+
+	public ImagemQuadrada(Context context, AttributeSet attrs) {
+		super(context, attrs);
+		this.setOnClickListener(this);
+	}
+
+	public ImagemQuadrada(Activity context) {
 		super(context);
-		
-		this.setLayoutParams(params);
-		this.setBackgroundResource(in);
 		this.setOnClickListener(this);
 
 	}
@@ -24,20 +32,22 @@ public class ImagemQuadrada extends View implements OnClickListener {
 		return super.performClick();
 	}
 	
+	@Override
+	public boolean isInEditMode() {
+		return super.isInEditMode();
+	}
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
 	public void onClick(View v) {
 		this.setOnClickListener(this);
-		ActMove.touch = this;
+		CustomRl.touch = this;
 		this.setOnTouchListener(new OnTouchListener() {
 			
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				int x = (int) event.getX();
 				int y = (int) event.getY();
-				
-				
 				
 				event.getEdgeFlags();
 

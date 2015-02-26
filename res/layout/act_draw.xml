@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
-    <ImageView 
+    <br.com.telas.ImagemQuadrada 
         android:id="@+id/image"
         android:layout_width="50sp"
         android:layout_height="50sp"
@@ -19,7 +19,7 @@
         android:layout_alignParentRight="true"
         android:text="qualquer coisa" />
 
-    <ImageView
+    <br.com.telas.ImagemQuadrada
         android:id="@+id/other"
         android:layout_width="50sp"
         android:layout_height="50sp"
