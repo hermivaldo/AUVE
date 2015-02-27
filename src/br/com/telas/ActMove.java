@@ -4,12 +4,9 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.hermivaldo.projetodraw.R;
 
@@ -37,7 +34,7 @@ public class ActMove extends Activity {
 		
 		mGroup.addView(mView);
 		
-		final ImageView mImage = (ImageView) findViewById(R.id.circulo);
+		final View mImage = findViewById(R.id.circulo);
 		
 		final ViewGroup group = (ViewGroup) findViewById(R.id.tela);
 		
