@@ -4,8 +4,6 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
 import com.hermivaldo.projetodraw.R;
@@ -33,20 +31,6 @@ public class ActMove extends Activity {
 		mView = (ViewGroup) getLayoutInflater().inflate(R.layout.la_actmove, null);
 		
 		mGroup.addView(mView);
-		
-		final View mImage = findViewById(R.id.circulo);
-		
-		final ViewGroup group = (ViewGroup) findViewById(R.id.tela);
-		
-		mImage.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				group.addView(ActMove.this.getLayoutInflater().inflate(R.layout.act_draw, null));
-				
-			}
-		});
-		
 		
 	}
 
