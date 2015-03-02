@@ -2,15 +2,24 @@ package br.com.telas;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import br.com.fileexplorer.FileChoose;
 
 import com.hermivaldo.projetodraw.R;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class ActMove extends Activity {
 
+	private static final int REQUEST_PATH = 1;
 	private ViewGroup mView;
 	private ViewGroup mGroup;
 
@@ -61,6 +70,37 @@ public class ActMove extends Activity {
 		
 	}
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.options, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.adicionar:
+			Intent intent1 = new Intent(this, FileChoose.class);
+			startActivityForResult(intent1, REQUEST_PATH);
+			break;
+		default:
+			break;
+		}
 	
+		return super.onOptionsItemSelected(item);
+	}
 
+	
+	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		//super.onActivityResult(requestCode, resultCode, data);
+		if (requestCode == REQUEST_PATH) {
+			if (resultCode == RESULT_OK) {
+
+				Bitmap map = BitmapFactory.decodeFile(data.getStringExtra("GetFileName"));
+				((ImageView) CustomRl.touch).setImageBitmap(map);
+				((ImageView) CustomRl.touch).setBackground(null);
+			}
+		}
+	}
 }

@@ -3,14 +3,17 @@ package br.com.telas;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Path;
+import android.graphics.RectF;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Toast;
+import android.widget.ImageView;
 
-public class ImagemQuadrada extends View implements OnClickListener {
+public class ImagemQuadrada extends ImageView implements OnClickListener {
 
 	public ImagemQuadrada(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
@@ -38,6 +41,16 @@ public class ImagemQuadrada extends View implements OnClickListener {
 	}
 
 	
+	@Override
+	protected void onDraw(Canvas canvas) {
+		float radius = 2700.0f;
+		Path clipPath = new Path();
+		RectF rect = new RectF(0,0,this.getWidth(),this.getHeight());
+		clipPath.addRoundRect(rect, radius, radius, Path.Direction.CW);
+		canvas.clipPath(clipPath);
+//		canvas.drawCircle(this.getWidth()/2, this.getHeight()/2, getWidth()/2, new Paint());
+		super.onDraw(canvas);
+	}
 	
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
@@ -88,10 +101,5 @@ public class ImagemQuadrada extends View implements OnClickListener {
 		
 	}
 
-	
-	public boolean onLongClick(View v) {
-		Toast.makeText(getContext(), "long", Toast.LENGTH_LONG).show();
-		return false;
-	}
 
 }

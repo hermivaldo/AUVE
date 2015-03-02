@@ -8,7 +8,8 @@
         android:id="@+id/image"
         android:layout_width="50sp"
         android:layout_height="50sp"
-        android:background="@drawable/circle_shape"
+        style="@drawable/circle_shape"
+        
         />
 
     <TextView
