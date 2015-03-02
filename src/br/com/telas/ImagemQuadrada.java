@@ -8,6 +8,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Toast;
 
 public class ImagemQuadrada extends View implements OnClickListener {
 
@@ -24,7 +25,6 @@ public class ImagemQuadrada extends View implements OnClickListener {
 	public ImagemQuadrada(Activity context) {
 		super(context);
 		this.setOnClickListener(this);
-
 	}
 
 	@Override
@@ -37,6 +37,8 @@ public class ImagemQuadrada extends View implements OnClickListener {
 		return super.isInEditMode();
 	}
 
+	
+	
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
 	public void onClick(View v) {
@@ -46,10 +48,9 @@ public class ImagemQuadrada extends View implements OnClickListener {
 			
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
+				
 				int x = (int) event.getX();
 				int y = (int) event.getY();
-				
-				event.getEdgeFlags();
 
 				int velocidade = 0;
 
@@ -79,12 +80,18 @@ public class ImagemQuadrada extends View implements OnClickListener {
 				if (y < v.getHeight() / 2) {
 					v.setY(v.getY() - (-velocidadeY));
 				}
-
+				
 				v.performClick();
 				return false;
 			}
 		});
 		
+	}
+
+	
+	public boolean onLongClick(View v) {
+		Toast.makeText(getContext(), "long", Toast.LENGTH_LONG).show();
+		return false;
 	}
 
 }

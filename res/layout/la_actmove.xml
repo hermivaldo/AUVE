@@ -8,6 +8,7 @@
 
     <RelativeLayout
         android:layout_width="0sp"
+        android:id="@+id/reP"
         android:layout_height="fill_parent"
         android:layout_weight="1"
         android:orientation="vertical" >
@@ -17,22 +18,24 @@
             android:layout_width="450sp"
             android:layout_height="fill_parent"
             android:layout_alignParentRight="true"
-            android:background="@android:color/black" >
+            android:background="@android:color/darker_gray" >
         </br.com.telas.CustomRl>
 
-        <br.com.telas.ImagemQuadrada
+        <br.com.telas.CustomOptionView
             android:id="@+id/circulo"
             android:layout_width="50sp"
             android:layout_height="50sp"
             android:background="@drawable/circle_shape" />
 
-        <br.com.telas.ImagemQuadrada
+        <br.com.telas.CustomOptionView
+            android:id="@+id/imagemQuadrada1"
             android:layout_width="50sp"
             android:layout_height="50sp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_marginTop="66dp"
             android:background="@drawable/shape_border" />
+
     </RelativeLayout>
 
 </LinearLayout>
