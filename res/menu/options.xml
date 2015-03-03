@@ -5,4 +5,8 @@
 	    android:title="adicionar"
 	    android:showAsAction="always"/>
     
+	<item android:id="@+id/visu"
+	    android:title="visualizar"
+	    android:showAsAction="always"/>
+	
 </menu>

@@ -12,7 +12,12 @@ import android.widget.RelativeLayout;
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class CustomRl extends RelativeLayout implements OnClickListener{
 
-	static View touch;
+	/*
+	 * O método ser static sem um tipo de modificador
+	 * de acesso permite sua leitura apenas dentro das
+	 * classes que estão dentro do mesmo pacote.
+	 */
+	public static View touch;
 	
 	public CustomRl(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);

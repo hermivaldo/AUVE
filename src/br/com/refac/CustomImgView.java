@@ -1,58 +1,34 @@
-package br.com.telas;
+package br.com.refac;
 
-import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Path;
-import android.graphics.RectF;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import br.com.telas.CustomRl;
 
-public class ImagemQuadrada extends ImageView implements OnClickListener {
+public class CustomImgView extends ImageView implements OnClickListener{
 
-	public ImagemQuadrada(Context context, AttributeSet attrs, int defStyleAttr) {
+	public CustomImgView(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
-		this.setOnClickListener(this);
+		setOnClickListener(this);
 	}
 
-	public ImagemQuadrada(Context context, AttributeSet attrs) {
+	public CustomImgView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		this.setOnClickListener(this);
+		setOnClickListener(this);
 	}
 
-	public ImagemQuadrada(Activity context) {
+	public CustomImgView(Context context) {
 		super(context);
-		this.setOnClickListener(this);
+		setOnClickListener(this);
 	}
-
 	@Override
 	public boolean performClick() {
 		return super.performClick();
 	}
-	
-	@Override
-	public boolean isInEditMode() {
-		return super.isInEditMode();
-	}
 
-	
-	@Override
-	protected void onDraw(Canvas canvas) {
-		float radius = 2700.0f;
-		Path clipPath = new Path();
-		RectF rect = new RectF(0,0,this.getWidth(),this.getHeight());
-		clipPath.addRoundRect(rect, radius, radius, Path.Direction.CW);
-		canvas.clipPath(clipPath);
-//		canvas.drawCircle(this.getWidth()/2, this.getHeight()/2, getWidth()/2, new Paint());
-		super.onDraw(canvas);
-	}
-	
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
 	public void onClick(View v) {
 		this.setOnClickListener(this);
@@ -98,8 +74,7 @@ public class ImagemQuadrada extends ImageView implements OnClickListener {
 				return false;
 			}
 		});
-		
 	}
 
-
+	
 }

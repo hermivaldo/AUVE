@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.hermivaldo.projetodraw.R;
 
+@Deprecated
 public class DrawAct extends Activity implements OnClickListener {
 
 	private ImageView mImageView;

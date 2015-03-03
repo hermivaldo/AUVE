@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
-    <br.com.telas.ImagemQuadrada 
+    <br.com.refac.ImagemCirculo 
         android:id="@+id/image"
         android:layout_width="50sp"
         android:layout_height="50sp"
@@ -20,7 +20,7 @@
         android:layout_alignParentRight="true"
         android:text="qualquer coisa" />
 
-    <br.com.telas.ImagemQuadrada
+    <br.com.refac.ImagemCirculo
         android:id="@+id/other"
         android:layout_width="50sp"
         android:layout_height="50sp"
