@@ -3,10 +3,10 @@
     
 	<item android:id="@+id/adicionar"
 	    android:title="adicionar"
-	    android:showAsAction="always"/>
+	    android:showAsAction="ifRoom"/>
     
 	<item android:id="@+id/visu"
 	    android:title="visualizar"
-	    android:showAsAction="always"/>
+	    android:showAsAction="ifRoom"/>
 	
 </menu>
