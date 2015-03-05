@@ -1,7 +1,5 @@
 package br.com.telas;
 
-import com.hermivaldo.projetodraw.R;
-
 import android.annotation.SuppressLint;
 import android.app.Presentation;
 import android.content.Context;

@@ -1,10 +1,5 @@
 package br.com.telas;
 
-import br.com.refac.CustomImgView;
-import br.com.refac.ImagemCirculo;
-
-import com.hermivaldo.projetodraw.R;
-
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
@@ -14,6 +9,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import br.com.refac.CustomImgView;
+import br.com.refac.ImagemCirculo;
 
 
 public class CustomOptionView extends View implements OnClickListener{

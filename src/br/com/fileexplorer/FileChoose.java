@@ -12,8 +12,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
-
-import com.hermivaldo.projetodraw.R;
+import br.com.telas.R;
 
 public class FileChoose extends ListActivity{
 	private File currentDir;

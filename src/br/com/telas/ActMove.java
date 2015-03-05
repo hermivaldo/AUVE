@@ -17,7 +17,6 @@ import android.widget.ImageView;
 import br.com.fileexplorer.FileChoose;
 
 import com.commonsware.cwac.preso.PresentationHelper;
-import com.hermivaldo.projetodraw.R;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class ActMove extends Activity implements PresentationHelper.Listener {
