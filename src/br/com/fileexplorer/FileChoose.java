@@ -17,6 +17,11 @@ import br.com.telas.R;
 public class FileChoose extends ListActivity{
 	private File currentDir;
 	private FileAdapter adapter;
+	/*
+	 * Adicionada para simulação de erros
+	 * que podem acontecer utilizando a activity.
+	 */
+	private static FileChoose actFile;
 
 	@SuppressLint("SdCardPath")
 	@Override
@@ -24,6 +29,11 @@ public class FileChoose extends ListActivity{
 		super.onCreate(savedInstanceState);
 		currentDir = new File("/sdcard/");
 		fill(currentDir);
+		actFile = this;
+	}
+	
+	public static FileChoose getInstance(){
+		return actFile;
 	}
 
 	private void fill(File f) {

@@ -1,5 +1,7 @@
 package br.com.telas;
 
+import java.io.ByteArrayOutputStream;
+
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Presentation;
@@ -15,6 +17,7 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import br.com.fileexplorer.FileChoose;
+import br.com.refac.ViewStatica;
 
 import com.commonsware.cwac.preso.PresentationHelper;
 
@@ -77,8 +80,21 @@ public class ActMove extends Activity implements PresentationHelper.Listener {
 
 	@Override
 	protected void onResume() {
+
 		super.onResume();
 		helper.onResume();
+		/*
+		 * Permite a verificação apenas se for uma instância de ViewGroup
+		 * o elemento static não pode ser utilizado antes de alguma opção do 
+		 * menu ter sido chamada.
+		 * O fato de utilizar dois && fazem com que se a primeira opção
+		 * for falsa a não execute a próxima.
+		 */
+		if (ViewStatica.getViewGroup() instanceof ViewGroup){
+			ViewGroup pai = (ViewGroup) findViewById(R.id.reP);
+			pai.addView(ViewStatica.getViewOri());
+		}
+		
 	}
 
 	@Override
@@ -103,10 +119,16 @@ public class ActMove extends Activity implements PresentationHelper.Listener {
 			startActivityForResult(intent1, REQUEST_PATH);
 			break;
 		case R.id.visu:
-			ViewGroup tela = (ViewGroup) findViewById(R.id.tela);
-			((ViewGroup) tela.getParent()).removeView(tela);
-			preso.setContentView(tela);
-			preso.show();
+			ViewStatica.setViewGroup((ViewGroup) findViewById(R.id.tela));
+			Intent intent = new Intent(this,TelaPreView.class);
+			startActivity(intent);
+//			TODO faz-se a necessidade de criar um validador
+//			da entrada HDMI para utilização desse processo.
+//			preso.setContentView(tela);
+//			preso.show();
+			break;
+		case R.id.salvar:
+			ViewStatica.saveObjets((ViewGroup) findViewById(R.id.tela));
 			break;
 		default:
 			break;
@@ -115,6 +137,10 @@ public class ActMove extends Activity implements PresentationHelper.Listener {
 		return super.onOptionsItemSelected(item);
 	}
 
+	@Override
+	protected void onRestart() {
+		super.onRestart();
+	}
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// super.onActivityResult(requestCode, resultCode, data);
@@ -123,6 +149,7 @@ public class ActMove extends Activity implements PresentationHelper.Listener {
 
 				Bitmap map = BitmapFactory.decodeFile(data
 						.getStringExtra("GetFileName"));
+				map.compress(Bitmap.CompressFormat.PNG, 50, new ByteArrayOutputStream());
 				((ImageView) CustomRl.touch).setImageBitmap(map);
 				((ImageView) CustomRl.touch).setBackground(null);
 			}

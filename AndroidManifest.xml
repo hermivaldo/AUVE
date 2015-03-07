@@ -14,16 +14,26 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <activity android:name="br.com.telas.ActMove">
+        <activity android:name="br.com.telas.TelaPrincipal">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         
+        <activity android:name="br.com.telas.ActMove">
+            
+        </activity>
+        
         <activity android:name="br.com.fileexplorer.FileChoose">
             
         </activity>
+        
+        <activity android:name="br.com.telas.TelaPreView">
+            
+        </activity>
+        
+        <activity android:name="br.com.telas.PreVisualizarApresentacoes"></activity>
     </application>
 
 </manifest>

@@ -9,4 +9,10 @@
 	    android:title="visualizar"
 	    android:showAsAction="ifRoom"/>
 	
+	<item 
+	    android:id="@+id/salvar"
+	    android:title="salvar"
+	    android:showAsAction="always"
+	    />
+	
 </menu>
