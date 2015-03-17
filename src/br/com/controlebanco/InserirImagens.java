@@ -26,10 +26,14 @@ public class InserirImagens {
 
 			imagem.setBackground(getImage(((ImageView) group.getChildAt(ch))
 					.getDrawable()));
-			imagem.setHeight(group.getLayoutParams().height);
-			imagem.setWidth(group.getLayoutParams().width);
-			imagem.setY(group.getY());
-			imagem.setX(group.getX());
+			/*
+			 * Itens a serem obtidos os valores estavam mapeados aos objetos
+			 * errados.
+			 */
+			imagem.setHeight(group.getChildAt(ch).getLayoutParams().height);
+			imagem.setWidth(group.getChildAt(ch).getLayoutParams().width);
+			imagem.setY(group.getChildAt(ch).getY());
+			imagem.setX(group.getChildAt(ch).getX());
 			imagem.setIdApreds(idApres);
 			imagens.add(imagem);
 			

@@ -3,6 +3,7 @@ package br.com.entidades;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 
 public class Imagem {
@@ -65,6 +66,7 @@ public class Imagem {
 
 	public ImageView getImagem(Context context) {
 		ImageView view = new ImageView(context);
+		view.setLayoutParams(new LayoutParams(getWidth(),getHeight()));
 		view.setX(getX());
 		view.setY(getY());
 
