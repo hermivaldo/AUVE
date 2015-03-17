@@ -4,7 +4,10 @@ import java.io.ByteArrayOutputStream;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Presentation;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,7 +18,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
+import br.com.controlebanco.InserirApren;
 import br.com.fileexplorer.FileChoose;
 import br.com.refac.ViewStatica;
 
@@ -128,7 +133,8 @@ public class ActMove extends Activity implements PresentationHelper.Listener {
 //			preso.show();
 			break;
 		case R.id.salvar:
-			ViewStatica.saveObjets((ViewGroup) findViewById(R.id.tela));
+			alertSalvar();
+//			ViewStatica.saveObjets((ViewGroup) findViewById(R.id.tela));
 			break;
 		default:
 			break;
@@ -151,11 +157,35 @@ public class ActMove extends Activity implements PresentationHelper.Listener {
 						.getStringExtra("GetFileName"));
 				map.compress(Bitmap.CompressFormat.PNG, 50, new ByteArrayOutputStream());
 				((ImageView) CustomRl.touch).setImageBitmap(map);
-				((ImageView) CustomRl.touch).setBackground(null);
+				//((ImageView) CustomRl.touch).setBackground(null);
 			}
 		}
 	}
 
+	
+	private void alertSalvar(){
+		final EditText text = new EditText(getBaseContext());
+		
+		new AlertDialog.Builder(this).setTitle("Salvar Apresentação")
+		.setMessage("Informe o nome da apresentação que foi criada")
+		.setView(text)
+		.setPositiveButton("Salvar", new OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				ViewStatica.setViewGroup((ViewGroup) findViewById(R.id.tela));
+				InserirApren inserAp = new InserirApren(ActMove.this);
+				inserAp.inserirApre(text.getText().toString());
+			}
+		})
+		.setNegativeButton("Cancelar", new OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				
+			}
+		}).show();
+	}
+	
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
 	@Override
 	public void clearPreso(boolean arg0) {

@@ -1,5 +1,6 @@
 package br.com.telas;
 
+import br.com.slide.ActivityFragment;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,7 +18,7 @@ public class TelaPrincipal extends Activity{
 	}
 	
 	public void visulizarApre(View view){
-		startActivity(new Intent(this, PreVisualizarApresentacoes.class));
+		startActivity(new Intent(this, ActivityFragment.class));
 	}
 	
 }

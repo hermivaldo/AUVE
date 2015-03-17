@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,7 +18,7 @@ public class CustomRl extends RelativeLayout implements OnClickListener{
 	 * de acesso permite sua leitura apenas dentro das
 	 * classes que estão dentro do mesmo pacote.
 	 */
-	public static View touch;
+	public transient static View touch;
 	
 	public CustomRl(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
@@ -51,20 +52,17 @@ public class CustomRl extends RelativeLayout implements OnClickListener{
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				if (touch instanceof View){
-					v.performClick();
+					// v.performClick();
+					
 					int plano_fundo_x = (int) event.getX();
 					int plano_fundo_y = (int) event.getY();
-
-					int plano_fundo_objeto_x = (int) touch.getX();
-					int plano_fundo_objeto_y = (int) touch.getY();
 
 					touch.getLayoutParams().height = plano_fundo_y;
 					touch.getLayoutParams().width = plano_fundo_x;
 
-					touch.setX(plano_fundo_objeto_x);
-					touch.setY(plano_fundo_objeto_y);
 					
-					touch.requestLayout();
+					CustomRl.this.requestLayout();
+					// touch.requestLayout();
 				}
 				return false;
 			}

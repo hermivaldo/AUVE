@@ -3,88 +3,83 @@ package br.com.banco;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.entidades.Imagens;
-import br.com.fileexplorer.Item;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import br.com.entidades.Imagem;
 
-public class ImagensDao extends SQLiteOpenHelper{
+public class ImagensDao {
 
-	/*
-	 * Tabela e Versão
-	 */
-	private static final String DATABASE = "imagens";
-	private static final int VERSION = 1;
-	
 	/*
 	 * Colunas
 	 */
-	private final String WIDTH = "WIDTH";
-	private final String HEIGHT = "HEIGHT";
-	private final String BACKGROUND = "BACKGROUND";
-	private final String Y = "Y";
-	private final String X = "X";
-	private final String ID = "id";
-	
+
+	private static final String WIDTH = "WIDTH";
+	private static final String HEIGHT = "HEIGHT";
+	private static final String BACKGROUND = "BACKGROUND";
+	private static final String Y = "Y";
+	private static final String X = "X";
+	private static final String ID = "id";
+	private static final String IDAPRESENT = "idApre";
+	private Context context;
+
 	public ImagensDao(Context context) {
-		super(context, DATABASE, null, VERSION);
-		
+		this.context = context;
+
 	}
 
-	@Override
-	public void onCreate(SQLiteDatabase db) {
-		String ddl = "CREATE TABLE imagens("+ ID + "int, " + HEIGHT +" int,"
-				+ WIDTH +" int,  " + BACKGROUND + " BLOB," + Y +" FLOAT,"+ X + " FLOAT)";
-		db.execSQL(ddl);
+	public static String onCreate() {
+		return "CREATE TABLE IF NOT EXISTS imagens(" + ID
+				+ " INTEGER PRIMARY KEY AUTOINCREMENT, " + HEIGHT + " REAL,"
+				+ WIDTH + " REAL,  " + BACKGROUND + " BLOB," + Y + " REAL," + X
+				+ " REAL ," + IDAPRESENT + " INTEGER, FOREIGN KEY( "
+				+ IDAPRESENT + ") REFERENCES" + " apresentacao(idApre))";
 	}
 
 	/*
 	 * Salva os chamados no banco de dados e fecha a conexão.
 	 */
-	public void saveChamados(List<Imagens> imagens){
+	public void saveChamados(List<Imagem> imagens) {
 		ContentValues values = new ContentValues();
 		try {
-			for (int im = 0; im < imagens.size(); im++){
-				values.put(ID, 1);
+			for (int im = 0; im < imagens.size(); im++) {
+
 				values.put(HEIGHT, imagens.get(im).getHeight());
 				values.put(WIDTH, imagens.get(im).getWidth());
 				values.put(BACKGROUND, imagens.get(im).getBackground());
 				values.put(Y, imagens.get(im).getY());
 				values.put(X, imagens.get(im).getX());
-				
-				
-				getWritableDatabase().insert(DATABASE, null, values);
+				values.put(IDAPRESENT, imagens.get(im).getIdApreds());
+
+				BancoImagem db = new BancoImagem(context);
+				db.getWritableDatabase().insert("imagens", null, values);
+				db.close();
 			}
 		} catch (Exception e) {
 			Log.e("ERRO SQLLITE", e.toString());
 		}
-		
-		
+
 	}
-	
-	@Override
-	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		String ddl = "DROP TABLE IF EXISTS imagens";
-		db.execSQL(ddl);
-		onCreate(db);
+
+	public static String onUpgrade() {
+		return "DROP TABLE IF EXISTS imagens";
 	}
-	
+
 	/*
 	 * Retorna todos os itens registrados dentro do banco de dados.
 	 */
-	public List<Imagens> getItens(){
-		List<Imagens> itens = new ArrayList<Imagens>();
-		String[] values = {HEIGHT,WIDTH,BACKGROUND,X,Y};
-		SQLiteDatabase db = getReadableDatabase();
-		Cursor curso = db.query(DATABASE, values, null, null, null, null, null);
-		
+	public List<Imagem> getItens() {
+		List<Imagem> itens = new ArrayList<Imagem>();
+		String[] values = { HEIGHT, WIDTH, BACKGROUND, X, Y };
+		SQLiteDatabase db = new BancoImagem(context).getReadableDatabase();
+		Cursor curso = db
+				.query("imagens", values, null, null, null, null, null);
+
 		while (curso.moveToNext()) {
-			Imagens imagem = new Imagens();
-			
+			Imagem imagem = new Imagem();
+
 			imagem.setHeight(curso.getInt(0));
 			imagem.setWidth(curso.getInt(1));
 			imagem.setBackground(curso.getBlob(2));
@@ -92,7 +87,34 @@ public class ImagensDao extends SQLiteOpenHelper{
 			imagem.setY(curso.getFloat(4));
 			itens.add(imagem);
 		}
-		
+		curso.close();
+		db.close();
+		return itens;
+	}
+
+	public List<Imagem> getItens(int idApre) {
+		List<Imagem> itens = new ArrayList<Imagem>();
+		String[] values = { HEIGHT, WIDTH, BACKGROUND, X, Y };
+		SQLiteDatabase db = new BancoImagem(context).getReadableDatabase();
+		Cursor curso = db
+				.query("imagens", values, IDAPRESENT +" =?", new String[]{String.valueOf(idApre)},
+						null, null, null);
+
+		while (curso.moveToNext()) {
+			Imagem imagem = new Imagem();
+			String h = curso.getString(0);
+			String w = curso.getString(1);
+			//String b = curso.getString(2);
+			String x = curso.getString(3);
+			String y = curso.getString(4);
+			imagem.setHeight(curso.getInt(0));
+			imagem.setWidth(curso.getInt(1));
+			imagem.setBackground(curso.getBlob(2));
+			imagem.setX(curso.getFloat(3));
+			imagem.setY(curso.getFloat(4));
+			itens.add(imagem);
+		}
+		curso.close();
 		db.close();
 		return itens;
 	}

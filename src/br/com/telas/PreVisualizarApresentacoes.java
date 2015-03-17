@@ -12,6 +12,8 @@ public class PreVisualizarApresentacoes extends Activity{
 		super.onCreate(savedInstanceState);
 		ViewGroup group = (ViewGroup) findViewById(android.R.id.content);
 		
+		
+		
 		group.addView(new InserirImagens().painel(getApplicationContext()));
 	}
 }

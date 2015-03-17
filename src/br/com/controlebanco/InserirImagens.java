@@ -13,17 +13,16 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import br.com.banco.ImagensDao;
-import br.com.entidades.Imagens;
+import br.com.entidades.Imagem;
 
 public class InserirImagens {
 
 	private ImagensDao db;
 
-	public void inserirRegistros(ViewGroup group) {
-		List<Imagens> imagens = new ArrayList<Imagens>();
+	public void inserirRegistros(ViewGroup group, int idApres) {
+		List<Imagem> imagens = new ArrayList<Imagem>();
 		for (int ch = 0; ch < group.getChildCount(); ch++) {
-			Imagens imagem = new Imagens();
-			ImageView view = (ImageView) group.getChildAt(ch);
+			Imagem imagem = new Imagem();
 
 			imagem.setBackground(getImage(((ImageView) group.getChildAt(ch))
 					.getDrawable()));
@@ -31,12 +30,15 @@ public class InserirImagens {
 			imagem.setWidth(group.getLayoutParams().width);
 			imagem.setY(group.getY());
 			imagem.setX(group.getX());
+			imagem.setIdApreds(idApres);
 			imagens.add(imagem);
+			
 
 		}
 
 		db = new ImagensDao(group.getContext());
 		db.saveChamados(imagens);
+		
 	}
 
 	private byte[] getImage(Drawable drawable) {
@@ -49,11 +51,28 @@ public class InserirImagens {
 
 	public ViewGroup painel(Context context) {
 		db = new ImagensDao(context);
-		List<Imagens> itens = db.getItens();
+		List<Imagem> itens = db.getItens();
 		RelativeLayout layout = new RelativeLayout(context);
 		layout.setLayoutParams(new LayoutParams(-1, -1));
 		for (int itPai = 0; itPai < itens.size(); itPai++) {
-			Imagens img = new Imagens();
+			Imagem img = new Imagem();
+			img.setBackground(itens.get(itPai).getBackground());
+			img.setHeight(itens.get(itPai).getHeight());
+			img.setWidth(itens.get(itPai).getWidth());
+			img.setX(itens.get(itPai).getX());
+			img.setY(itens.get(itPai).getY());
+			layout.addView(img.getImagem(context));
+		}
+		return layout;
+	}
+	
+	public ViewGroup painel(Context context, int idApre) {
+		db = new ImagensDao(context);
+		List<Imagem> itens = db.getItens(idApre);
+		RelativeLayout layout = new RelativeLayout(context);
+		layout.setLayoutParams(new LayoutParams(-1, -1));
+		for (int itPai = 0; itPai < itens.size(); itPai++) {
+			Imagem img = new Imagem();
 			img.setBackground(itens.get(itPai).getBackground());
 			img.setHeight(itens.get(itPai).getHeight());
 			img.setWidth(itens.get(itPai).getWidth());

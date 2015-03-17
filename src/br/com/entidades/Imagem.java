@@ -3,11 +3,20 @@ package br.com.entidades;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.view.View;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 
-public class Imagens {
+public class Imagem {
+
+	private int idApreds;
+
+	public int getIdApreds() {
+		return idApreds;
+	}
+
+	public void setIdApreds(int idApreds) {
+		this.idApreds = idApreds;
+	}
+
 	private int width;
 	private int height;
 	private float y;
@@ -53,14 +62,16 @@ public class Imagens {
 	public void setBackground(byte[] background) {
 		this.background = background;
 	}
-	
-	public ImageView getImagem(Context context){
+
+	public ImageView getImagem(Context context) {
 		ImageView view = new ImageView(context);
 		view.setX(getX());
 		view.setY(getY());
+
+		//view.setLayoutParams(new LayoutParams(width, height));
+		Bitmap bitmap = BitmapFactory.decodeByteArray(background, 0,
+				background.length);
 		
-		view.setLayoutParams(new LayoutParams(width, height));
-		Bitmap bitmap = BitmapFactory.decodeByteArray(background, 0, background.length);
 		view.setImageBitmap(bitmap);
 		return view;
 	}

@@ -33,6 +33,7 @@
             
         </activity>
         
+        <activity android:name="br.com.slide.ActivityFragment"></activity>
         <activity android:name="br.com.telas.PreVisualizarApresentacoes"></activity>
     </application>
 

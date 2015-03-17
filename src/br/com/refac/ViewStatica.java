@@ -5,6 +5,7 @@ import br.com.controlebanco.InserirImagens;
 
 public abstract class ViewStatica {
 
+	
 	/*
 	 * Por mais que o layout volte para a activity faz-se a necessidade de
 	 * ajustar a proporção da tela, os parâmetros de altura e largura devem ser
@@ -31,10 +32,8 @@ public abstract class ViewStatica {
 		return tela;
 	}
 
-	public static void saveObjets(ViewGroup view) {
-		tela = view;
-		new InserirImagens().inserirRegistros(tela);
-
+	public static void saveObjets(int idApre) {
+		new InserirImagens().inserirRegistros(tela, idApre);
 	}
 
 }
