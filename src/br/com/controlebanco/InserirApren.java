@@ -1,5 +1,7 @@
 package br.com.controlebanco;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 import br.com.banco.ApresentacoesDAO;
 import br.com.entidades.Apresentacao;
@@ -20,6 +22,10 @@ public class InserirApren {
 		db.inserirDados(apresentacao);
 		Apresentacao apre = db.getApre(descricao);
 		ViewStatica.saveObjets(apre.getIdApresentacao());
+	}
+	
+	public ArrayList<Apresentacao> getAllApre(){
+		return new ApresentacoesDAO(context).getAllApre();
 	}
 	
 }

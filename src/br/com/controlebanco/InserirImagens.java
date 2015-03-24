@@ -1,35 +1,32 @@
 package br.com.controlebanco;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import br.com.banco.ImagensDao;
-import br.com.entidades.Imagem;
+import br.com.banco.ContApresDao;
+import br.com.entidades.Conteudo;
 
 public class InserirImagens {
 
-	private ImagensDao db;
+	private ContApresDao db;
 
 	public void inserirRegistros(ViewGroup group, int idApres) {
-		List<Imagem> imagens = new ArrayList<Imagem>();
+		List<Conteudo> imagens = new ArrayList<Conteudo>();
 		for (int ch = 0; ch < group.getChildCount(); ch++) {
-			Imagem imagem = new Imagem();
+			Conteudo imagem = new Conteudo();
 
-			imagem.setBackground(getImage(((ImageView) group.getChildAt(ch))
-					.getDrawable()));
-			/*
+//			imagem.setBackground(getImage(((ImageView) group.getChildAt(ch))
+//					.getDrawable()));
+		/*
 			 * Itens a serem obtidos os valores estavam mapeados aos objetos
 			 * errados.
 			 */
+			imagem.setPath(group.getChildAt(ch).getTag().toString());
+			imagem.setClassName(group.getChildAt(ch).getClass().getName());
 			imagem.setHeight(group.getChildAt(ch).getLayoutParams().height);
 			imagem.setWidth(group.getChildAt(ch).getLayoutParams().width);
 			imagem.setY(group.getChildAt(ch).getY());
@@ -40,48 +37,52 @@ public class InserirImagens {
 
 		}
 
-		db = new ImagensDao(group.getContext());
+		db = new ContApresDao(group.getContext());
 		db.saveChamados(imagens);
 		
 	}
 
-	private byte[] getImage(Drawable drawable) {
-		BitmapDrawable draw = (BitmapDrawable) drawable;
-		ByteArrayOutputStream stream = new ByteArrayOutputStream();
-		Bitmap bm = draw.getBitmap();
-		bm.compress(Bitmap.CompressFormat.PNG, 50, stream);
-		return stream.toByteArray();
-	}
+//	private byte[] getImage(Drawable drawable) {
+//		BitmapDrawable draw = (BitmapDrawable) drawable;
+//		ByteArrayOutputStream stream = new ByteArrayOutputStream();
+//		Bitmap bm = draw.getBitmap();
+//		bm.compress(Bitmap.CompressFormat.PNG, 50, stream);
+//		return stream.toByteArray();
+//	}
 
 	public ViewGroup painel(Context context) {
-		db = new ImagensDao(context);
-		List<Imagem> itens = db.getItens();
+		db = new ContApresDao(context);
+		List<Conteudo> itens = db.getItens();
 		RelativeLayout layout = new RelativeLayout(context);
 		layout.setLayoutParams(new LayoutParams(-1, -1));
 		for (int itPai = 0; itPai < itens.size(); itPai++) {
-			Imagem img = new Imagem();
-			img.setBackground(itens.get(itPai).getBackground());
+			Conteudo img = new Conteudo();
+//			img.setBackground(itens.get(itPai).getBackground());
 			img.setHeight(itens.get(itPai).getHeight());
 			img.setWidth(itens.get(itPai).getWidth());
 			img.setX(itens.get(itPai).getX());
 			img.setY(itens.get(itPai).getY());
+			img.setPath(itens.get(itPai).getPath());
+			img.setClassName(itens.get(itPai).getClassName());
 			layout.addView(img.getImagem(context));
 		}
 		return layout;
 	}
 	
 	public ViewGroup painel(Context context, int idApre) {
-		db = new ImagensDao(context);
-		List<Imagem> itens = db.getItens(idApre);
+		db = new ContApresDao(context);
+		List<Conteudo> itens = db.getItens(idApre);
 		RelativeLayout layout = new RelativeLayout(context);
 		layout.setLayoutParams(new LayoutParams(-1, -1));
 		for (int itPai = 0; itPai < itens.size(); itPai++) {
-			Imagem img = new Imagem();
-			img.setBackground(itens.get(itPai).getBackground());
+			Conteudo img = new Conteudo();
+//			img.setBackground(itens.get(itPai).getBackground());
 			img.setHeight(itens.get(itPai).getHeight());
 			img.setWidth(itens.get(itPai).getWidth());
 			img.setX(itens.get(itPai).getX());
 			img.setY(itens.get(itPai).getY());
+			img.setPath(itens.get(itPai).getPath());
+			img.setClassName(itens.get(itPai).getClassName());
 			layout.addView(img.getImagem(context));
 		}
 		return layout;

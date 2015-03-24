@@ -4,7 +4,6 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -52,7 +51,7 @@ public class CustomRl extends RelativeLayout implements OnClickListener{
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				if (touch instanceof View){
-					// v.performClick();
+					v.performClick();
 					
 					int plano_fundo_x = (int) event.getX();
 					int plano_fundo_y = (int) event.getY();
@@ -62,7 +61,7 @@ public class CustomRl extends RelativeLayout implements OnClickListener{
 
 					
 					CustomRl.this.requestLayout();
-					// touch.requestLayout();
+					
 				}
 				return false;
 			}

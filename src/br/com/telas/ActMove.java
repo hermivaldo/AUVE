@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.VideoView;
 import br.com.controlebanco.InserirApren;
 import br.com.fileexplorer.FileChoose;
 import br.com.refac.ViewStatica;
@@ -29,7 +30,7 @@ import com.commonsware.cwac.preso.PresentationHelper;
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class ActMove extends Activity implements PresentationHelper.Listener {
 
-	private static final int REQUEST_PATH = 1;
+	public static final int REQUEST_PATH = 1;
 	private ViewGroup mView;
 	private ViewGroup mGroup;
 	Presentation preso = null;
@@ -153,11 +154,20 @@ public class ActMove extends Activity implements PresentationHelper.Listener {
 		if (requestCode == REQUEST_PATH) {
 			if (resultCode == RESULT_OK) {
 
-				Bitmap map = BitmapFactory.decodeFile(data
+				if (data
+						.getStringExtra("GetFileName").contains("3gp")){
+					((VideoView) CustomRl.touch).setVideoPath(data
+							.getStringExtra("GetFileName"));
+				}else {
+					Bitmap map = BitmapFactory.decodeFile(data
+							.getStringExtra("GetFileName"));
+					map.compress(Bitmap.CompressFormat.PNG, 50, new ByteArrayOutputStream());
+					((ImageView) CustomRl.touch).setImageBitmap(map);
+					
+				}
+				
+				CustomRl.touch.setTag(data
 						.getStringExtra("GetFileName"));
-				map.compress(Bitmap.CompressFormat.PNG, 50, new ByteArrayOutputStream());
-				((ImageView) CustomRl.touch).setImageBitmap(map);
-				//((ImageView) CustomRl.touch).setBackground(null);
 			}
 		}
 	}

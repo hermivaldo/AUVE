@@ -19,6 +19,7 @@
             android:layout_height="fill_parent"
             android:layout_alignParentRight="true"
             android:background="@android:color/darker_gray" >
+
         </br.com.telas.CustomRl>
 
         <br.com.telas.CustomOptionView
@@ -36,6 +37,23 @@
             android:layout_marginTop="66dp"
             android:background="@drawable/shape_border" />
 
+        <br.com.telas.CustomOptionView
+            android:id="@+id/video"
+            android:layout_width="50sp"
+            android:layout_height="50sp"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/imagemQuadrada1"
+            android:layout_marginTop="21dp"
+            android:background="@drawable/shape_border" />
+
+        <br.com.video.CustomViewDraw 
+            android:layout_width="50sp"
+            android:layout_height="50sp"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/video"
+            android:layout_marginTop="21dp"
+            android:background="@drawable/shape_border"
+            />
     </RelativeLayout>
 
 </LinearLayout>

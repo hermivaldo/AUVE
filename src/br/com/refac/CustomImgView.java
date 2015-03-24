@@ -25,17 +25,17 @@ public class CustomImgView extends ImageView implements OnClickListener {
 		setOnClickListener(this);
 	}
 
+	
+	@Override
+	public boolean isInEditMode() {
+		// TODO Auto-generated method stub
+		return super.isInEditMode();
+	}
+	
 	@Override
 	public void onClick(View v) {
 		this.setOnClickListener(this);
-		if (CustomRl.touch instanceof CustomImgView){
-			CustomRl.touch.invalidate();
-			synchronized (this) {
-				CustomRl.touch = this;
-			} 
-		}else {
-			CustomRl.touch = this;
-		}
+		
 		
 		this.setOnTouchListener(new OnTouchListener() {
 
@@ -52,8 +52,8 @@ public class CustomImgView extends ImageView implements OnClickListener {
 					velocidade = (x - (v.getWidth() / 2));
 				} else {
 					/*
-					 * Costuma causar ações indesejadas na aplicação, ainda não
-					 * foi possível diagnosticar a razão desse problema.
+					 * Costuma causar aï¿½ï¿½es indesejadas na aplicaï¿½ï¿½o, ainda nï¿½o
+					 * foi possï¿½vel diagnosticar a razï¿½o desse problema.
 					 */
 					// v.performClick();
 					velocidade *= -1;

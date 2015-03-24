@@ -1,7 +1,6 @@
 package br.com.refac;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Path;
@@ -21,7 +20,7 @@ public class ImagemCirculo extends CustomImgView implements OnClickListener {
 		super(context, attrs);
 	}
 
-	public ImagemCirculo(Activity context) {
+	public ImagemCirculo(Context context) {
 		super(context);
 	}
 
@@ -39,6 +38,10 @@ public class ImagemCirculo extends CustomImgView implements OnClickListener {
 		clipPath.addRoundRect(rect, radius, radius, Path.Direction.CW);
 		canvas.clipPath(clipPath);
 		super.onDraw(canvas);
+	}
+	
+	public static String nameClass(){
+		return ImagemCirculo.class.getName();
 	}
 
 		

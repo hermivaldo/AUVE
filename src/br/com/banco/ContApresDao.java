@@ -8,9 +8,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-import br.com.entidades.Imagem;
+import br.com.entidades.Conteudo;
 
-public class ImagensDao {
+public class ContApresDao {
 
 	/*
 	 * Colunas
@@ -23,9 +23,11 @@ public class ImagensDao {
 	private static final String X = "X";
 	private static final String ID = "id";
 	private static final String IDAPRESENT = "idApre";
+	private static final String CLASSNAME = "className";
+	private static final String PATH = "path";
 	private Context context;
 
-	public ImagensDao(Context context) {
+	public ContApresDao(Context context) {
 		this.context = context;
 
 	}
@@ -33,26 +35,29 @@ public class ImagensDao {
 	public static String onCreate() {
 		return "CREATE TABLE IF NOT EXISTS imagens(" + ID
 				+ " INTEGER PRIMARY KEY AUTOINCREMENT, " + HEIGHT + " REAL,"
-				+ WIDTH + " REAL,  " + BACKGROUND + " BLOB," + Y + " REAL," + X
-				+ " REAL ," + IDAPRESENT + " INTEGER, FOREIGN KEY( "
+				+ WIDTH + " REAL,  " + Y + " REAL," + X
+				+ " REAL ," + IDAPRESENT + " INTEGER, " + CLASSNAME  +" TEXT, "
+					+ PATH	+ " TEXT, FOREIGN KEY( "
 				+ IDAPRESENT + ") REFERENCES" + " apresentacao(idApre))";
 	}
 
 	/*
 	 * Salva os chamados no banco de dados e fecha a conexão.
 	 */
-	public void saveChamados(List<Imagem> imagens) {
+	public void saveChamados(List<Conteudo> imagens) {
 		ContentValues values = new ContentValues();
 		try {
 			for (int im = 0; im < imagens.size(); im++) {
 
 				values.put(HEIGHT, imagens.get(im).getHeight());
 				values.put(WIDTH, imagens.get(im).getWidth());
-				values.put(BACKGROUND, imagens.get(im).getBackground());
+				//values.put(BACKGROUND, imagens.get(im).getBackground());
 				values.put(Y, imagens.get(im).getY());
 				values.put(X, imagens.get(im).getX());
 				values.put(IDAPRESENT, imagens.get(im).getIdApreds());
-
+				values.put(CLASSNAME, imagens.get(im).getClassName());
+				values.put(PATH, imagens.get(im).getPath());
+				
 				BancoImagem db = new BancoImagem(context);
 				db.getWritableDatabase().insert("imagens", null, values);
 				db.close();
@@ -70,21 +75,23 @@ public class ImagensDao {
 	/*
 	 * Retorna todos os itens registrados dentro do banco de dados.
 	 */
-	public List<Imagem> getItens() {
-		List<Imagem> itens = new ArrayList<Imagem>();
-		String[] values = { HEIGHT, WIDTH, BACKGROUND, X, Y };
+	public List<Conteudo> getItens() {
+		List<Conteudo> itens = new ArrayList<Conteudo>();
+		String[] values = { HEIGHT, WIDTH, X, Y, PATH, CLASSNAME };
 		SQLiteDatabase db = new BancoImagem(context).getReadableDatabase();
 		Cursor curso = db
 				.query("imagens", values, null, null, null, null, null);
 
 		while (curso.moveToNext()) {
-			Imagem imagem = new Imagem();
+			Conteudo imagem = new Conteudo();
 
 			imagem.setHeight(curso.getInt(0));
 			imagem.setWidth(curso.getInt(1));
-			imagem.setBackground(curso.getBlob(2));
-			imagem.setX(curso.getFloat(3));
-			imagem.setY(curso.getFloat(4));
+			//imagem.setBackground(curso.getBlob(2));
+			imagem.setX(curso.getFloat(2));
+			imagem.setY(curso.getFloat(3));
+			imagem.setPath(curso.getString(4));
+			imagem.setClassName(curso.getString(5));
 			itens.add(imagem);
 		}
 		curso.close();
@@ -92,26 +99,23 @@ public class ImagensDao {
 		return itens;
 	}
 
-	public List<Imagem> getItens(int idApre) {
-		List<Imagem> itens = new ArrayList<Imagem>();
-		String[] values = { HEIGHT, WIDTH, BACKGROUND, X, Y };
+	public List<Conteudo> getItens(int idApre) {
+		List<Conteudo> itens = new ArrayList<Conteudo>();
+		String[] values = { HEIGHT, WIDTH, X, Y , PATH, CLASSNAME };
 		SQLiteDatabase db = new BancoImagem(context).getReadableDatabase();
 		Cursor curso = db
 				.query("imagens", values, IDAPRESENT +" =?", new String[]{String.valueOf(idApre)},
 						null, null, null);
 
 		while (curso.moveToNext()) {
-			Imagem imagem = new Imagem();
-			String h = curso.getString(0);
-			String w = curso.getString(1);
-			//String b = curso.getString(2);
-			String x = curso.getString(3);
-			String y = curso.getString(4);
+			Conteudo imagem = new Conteudo();
 			imagem.setHeight(curso.getInt(0));
 			imagem.setWidth(curso.getInt(1));
-			imagem.setBackground(curso.getBlob(2));
-			imagem.setX(curso.getFloat(3));
-			imagem.setY(curso.getFloat(4));
+			//imagem.setBackground(curso.getBlob(2));
+			imagem.setX(curso.getFloat(2));
+			imagem.setY(curso.getFloat(3));
+			imagem.setPath(curso.getString(4));
+			imagem.setClassName(curso.getString(5));
 			itens.add(imagem);
 		}
 		curso.close();

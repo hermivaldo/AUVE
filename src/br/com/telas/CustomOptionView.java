@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import br.com.refac.CustomImgView;
 import br.com.refac.ImagemCirculo;
+import br.com.video.CustomVideoView;
 
 
 public class CustomOptionView extends View implements OnClickListener{
@@ -49,12 +50,15 @@ public class CustomOptionView extends View implements OnClickListener{
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 	@Override
 	public void onClick(View v) {
-		CustomImgView imagemQuadrada = null;
+		View imagemQuadrada = null;
 		switch (v.getId()) {
 		case R.id.circulo:
 			imagemQuadrada = new ImagemCirculo((Activity) getContext());
 			break;
-
+		
+		case R.id.video:
+			imagemQuadrada = new CustomVideoView((Activity) getContext());
+			break;
 		default:
 			imagemQuadrada = new CustomImgView((Activity) getContext());
 			break;

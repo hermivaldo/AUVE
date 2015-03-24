@@ -16,13 +16,13 @@ public class BancoImagem extends SQLiteOpenHelper{
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL(ApresentacoesDAO.onCreate());
-		db.execSQL(ImagensDao.onCreate());
+		db.execSQL(ContApresDao.onCreate());
 		
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int arg1, int arg2) {
-		db.execSQL(ImagensDao.onUpgrade());
+		db.execSQL(ContApresDao.onUpgrade());
 		db.execSQL(ApresentacoesDAO.onUpgrade());
 	}
 
