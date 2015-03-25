@@ -27,8 +27,10 @@ public class InserirImagens {
 			 */
 			imagem.setPath(group.getChildAt(ch).getTag().toString());
 			imagem.setClassName(group.getChildAt(ch).getClass().getName());
-			imagem.setHeight(group.getChildAt(ch).getLayoutParams().height);
-			imagem.setWidth(group.getChildAt(ch).getLayoutParams().width);
+			imagem.setHeight((int) (group.getChildAt(ch).getLayoutParams().height
+					* group.getChildAt(ch).getScaleY()) );
+			imagem.setWidth((int) (group.getChildAt(ch).getLayoutParams().width
+					* group.getChildAt(ch).getScaleX()));
 			imagem.setY(group.getChildAt(ch).getY());
 			imagem.setX(group.getChildAt(ch).getX());
 			imagem.setIdApreds(idApres);
@@ -64,7 +66,7 @@ public class InserirImagens {
 			img.setY(itens.get(itPai).getY());
 			img.setPath(itens.get(itPai).getPath());
 			img.setClassName(itens.get(itPai).getClassName());
-			layout.addView(img.getImagem(context));
+			layout.addView(img.getComponent(context));
 		}
 		return layout;
 	}
@@ -83,7 +85,7 @@ public class InserirImagens {
 			img.setY(itens.get(itPai).getY());
 			img.setPath(itens.get(itPai).getPath());
 			img.setClassName(itens.get(itPai).getClassName());
-			layout.addView(img.getImagem(context));
+			layout.addView(img.getComponent(context));
 		}
 		return layout;
 	}

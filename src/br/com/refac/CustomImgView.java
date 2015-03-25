@@ -6,7 +6,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
-import br.com.telas.CustomRl;
 
 public class CustomImgView extends ImageView implements OnClickListener {
 

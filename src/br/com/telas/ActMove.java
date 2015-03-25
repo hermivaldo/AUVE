@@ -1,7 +1,5 @@
 package br.com.telas;
 
-import java.io.ByteArrayOutputStream;
-
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -9,21 +7,20 @@ import android.app.Presentation;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.VideoView;
 import br.com.controlebanco.InserirApren;
 import br.com.fileexplorer.FileChoose;
 import br.com.refac.ViewStatica;
+import br.com.viewhierarchy.ViewServer;
+import br.tcc.auve.regras.LoadComponent;
 
 import com.commonsware.cwac.preso.PresentationHelper;
 
@@ -35,6 +32,7 @@ public class ActMove extends Activity implements PresentationHelper.Listener {
 	private ViewGroup mGroup;
 	Presentation preso = null;
 	PresentationHelper helper = null;
+	public static View mViewSelected;
 
 	/*
 	 * (non-Javadoc)
@@ -55,6 +53,7 @@ public class ActMove extends Activity implements PresentationHelper.Listener {
 
 		mGroup.addView(mView);
 
+		ViewServer.get(this).addWindow(this);
 		helper = new PresentationHelper(this, this);
 		/*
 		 * Trexo removido para a classe CustomOptionView. Agora todo o conteúdo
@@ -84,29 +83,37 @@ public class ActMove extends Activity implements PresentationHelper.Listener {
 
 	}
 
+	
+	
 	@Override
 	protected void onResume() {
 
 		super.onResume();
 		helper.onResume();
 		/*
-		 * Permite a verificação apenas se for uma instância de ViewGroup
-		 * o elemento static não pode ser utilizado antes de alguma opção do 
-		 * menu ter sido chamada.
-		 * O fato de utilizar dois && fazem com que se a primeira opção
-		 * for falsa a não execute a próxima.
+		 * Permite a verificação apenas se for uma instância de ViewGroup o
+		 * elemento static não pode ser utilizado antes de alguma opção do menu
+		 * ter sido chamada. O fato de utilizar dois && fazem com que se a
+		 * primeira opção for falsa a não execute a próxima.
 		 */
-		if (ViewStatica.getViewGroup() instanceof ViewGroup){
+		if (ViewStatica.getViewGroup() instanceof ViewGroup) {
 			ViewGroup pai = (ViewGroup) findViewById(R.id.reP);
 			pai.addView(ViewStatica.getViewOri());
 		}
-		
+
 	}
 
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		ViewServer.get(this).removeWindow(this);
+	}
+	
 	@Override
 	protected void onPause() {
 		super.onPause();
 		helper.onPause();
+		ViewServer.get(this).setFocusedWindow(this);
 	}
 
 	@Override
@@ -121,21 +128,24 @@ public class ActMove extends Activity implements PresentationHelper.Listener {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.adicionar:
+			// Toast.makeText(this, mViewSelected.toString(),
+			// Toast.LENGTH_SHORT).show();
+
 			Intent intent1 = new Intent(this, FileChoose.class);
 			startActivityForResult(intent1, REQUEST_PATH);
 			break;
 		case R.id.visu:
 			ViewStatica.setViewGroup((ViewGroup) findViewById(R.id.tela));
-			Intent intent = new Intent(this,TelaPreView.class);
+			Intent intent = new Intent(this, TelaPreView.class);
 			startActivity(intent);
-//			TODO faz-se a necessidade de criar um validador
-//			da entrada HDMI para utilização desse processo.
-//			preso.setContentView(tela);
-//			preso.show();
+			// TODO faz-se a necessidade de criar um validador
+			// da entrada HDMI para utilização desse processo.
+			// preso.setContentView(tela);
+			// preso.show();
 			break;
 		case R.id.salvar:
 			alertSalvar();
-//			ViewStatica.saveObjets((ViewGroup) findViewById(R.id.tela));
+			// ViewStatica.saveObjets((ViewGroup) findViewById(R.id.tela));
 			break;
 		default:
 			break;
@@ -148,54 +158,43 @@ public class ActMove extends Activity implements PresentationHelper.Listener {
 	protected void onRestart() {
 		super.onRestart();
 	}
+
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// super.onActivityResult(requestCode, resultCode, data);
 		if (requestCode == REQUEST_PATH) {
 			if (resultCode == RESULT_OK) {
 
-				if (data
-						.getStringExtra("GetFileName").contains("3gp")){
-					((VideoView) CustomRl.touch).setVideoPath(data
-							.getStringExtra("GetFileName"));
-				}else {
-					Bitmap map = BitmapFactory.decodeFile(data
-							.getStringExtra("GetFileName"));
-					map.compress(Bitmap.CompressFormat.PNG, 50, new ByteArrayOutputStream());
-					((ImageView) CustomRl.touch).setImageBitmap(map);
-					
-				}
-				
-				CustomRl.touch.setTag(data
-						.getStringExtra("GetFileName"));
+				new LoadComponent((ViewGroup) findViewById(R.id.tela))
+						.component(data.getStringExtra("GetFileName"));
+
 			}
 		}
 	}
 
-	
-	private void alertSalvar(){
+	private void alertSalvar() {
 		final EditText text = new EditText(getBaseContext());
-		
-		new AlertDialog.Builder(this).setTitle("Salvar Apresenta��o")
-		.setMessage("Informe o nome da apresenta��o que foi criada")
-		.setView(text)
-		.setPositiveButton("Salvar", new OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				ViewStatica.setViewGroup((ViewGroup) findViewById(R.id.tela));
-				InserirApren inserAp = new InserirApren(ActMove.this);
-				inserAp.inserirApre(text.getText().toString());
-			}
-		})
-		.setNegativeButton("Cancelar", new OnClickListener() {
-			
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				
-			}
-		}).show();
+
+		new AlertDialog.Builder(this).setTitle("Salvar Apresenta��o")
+				.setMessage("Informe o nome da apresenta��o que foi criada")
+				.setView(text)
+				.setPositiveButton("Salvar", new OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						ViewStatica
+								.setViewGroup((ViewGroup) findViewById(R.id.tela));
+						InserirApren inserAp = new InserirApren(ActMove.this);
+						inserAp.inserirApre(text.getText().toString());
+					}
+				}).setNegativeButton("Cancelar", new OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+
+					}
+				}).show();
 	}
-	
+
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
 	@Override
 	public void clearPreso(boolean arg0) {
@@ -207,6 +206,6 @@ public class ActMove extends Activity implements PresentationHelper.Listener {
 
 	@Override
 	public void showPreso(Display arg0) {
-		preso= new SecondScreenDemo(this, arg0);
+		preso = new SecondScreenDemo(this, arg0);
 	}
 }

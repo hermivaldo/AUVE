@@ -9,9 +9,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import br.com.refac.CustomImgView;
-import br.com.refac.ImagemCirculo;
-import br.com.video.CustomVideoView;
+import br.tcc.auve.comple.ViewGestory;
 
 
 public class CustomOptionView extends View implements OnClickListener{
@@ -51,22 +49,11 @@ public class CustomOptionView extends View implements OnClickListener{
 	@Override
 	public void onClick(View v) {
 		View imagemQuadrada = null;
-		switch (v.getId()) {
-		case R.id.circulo:
-			imagemQuadrada = new ImagemCirculo((Activity) getContext());
-			break;
 		
-		case R.id.video:
-			imagemQuadrada = new CustomVideoView((Activity) getContext());
-			break;
-		default:
-			imagemQuadrada = new CustomImgView((Activity) getContext());
-			break;
-		}
+		imagemQuadrada = new ViewGestory(getContext());
 		
-		int hei = this.getLayoutParams().height;
-		int wid = this.getLayoutParams().width;
-		imagemQuadrada.setLayoutParams(new LayoutParams(wid, hei));
+		
+		imagemQuadrada.setLayoutParams(new LayoutParams(200, 200));
 		imagemQuadrada.setX(this.getX());
 		imagemQuadrada.setY(this.getY());
 		imagemQuadrada.setBackground(this.getBackground());

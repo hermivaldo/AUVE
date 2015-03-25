@@ -6,9 +6,15 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.ImageView;
+import android.widget.MediaController;
+import android.widget.VideoView;
 import br.com.refac.CustomImgView;
 import br.com.refac.ImagemCirculo;
+import br.com.telas.ActMove;
+import br.tcc.auve.comple.ViewGestory;
 
 public class Conteudo {
 
@@ -20,7 +26,7 @@ public class Conteudo {
 	private byte[] background;
 	private String path;
 	private String className;
-	
+
 	public String getPath() {
 		return path;
 	}
@@ -44,7 +50,7 @@ public class Conteudo {
 	public void setIdApreds(int idApreds) {
 		this.idApreds = idApreds;
 	}
-	
+
 	public int getWidth() {
 		return width;
 	}
@@ -85,42 +91,33 @@ public class Conteudo {
 		this.background = background;
 	}
 
-	public View getImagem(Context context){
-		if (className.equals(ImagemCirculo.class.getName())){
-			ImagemCirculo circulo = new ImagemCirculo(context);
-			circulo.setLayoutParams(new LayoutParams(getWidth(),getHeight()));
-			circulo.setX(getX());
-			circulo.setY(getY());
-			Bitmap map = BitmapFactory.decodeFile(path);
-			map.compress(Bitmap.CompressFormat.PNG, 50, new ByteArrayOutputStream());
-			circulo.setImageBitmap(map);
-			return circulo;
-		}else if (className.equals(CustomImgView.class.getName())){
-			CustomImgView quadrado = new CustomImgView(context);
-			quadrado.setLayoutParams(new LayoutParams(getWidth(),getHeight()));
+	public View getComponent(Context context) {
+
+		if(path.contains(".jpg")){
+			ViewGestory quadrado = new ViewGestory(context);
+			quadrado.setLayoutParams(new LayoutParams(getWidth(), getHeight()));
 			quadrado.setX(getX());
 			quadrado.setY(getY());
 			Bitmap map = BitmapFactory.decodeFile(path);
-			map.compress(Bitmap.CompressFormat.PNG, 50, new ByteArrayOutputStream());
+			//map.compress(Bitmap.CompressFormat.PNG, 50, new ByteArrayOutputStream());
 			quadrado.setImageBitmap(map);
 			return quadrado;
+			
+		}else if (path.contains(".3gp")) {
+			VideoView video = new VideoView(context);
+			MediaController controller = new MediaController(context);
+			video.setMediaController(controller);
+			video.setLayoutParams(new LayoutParams(getWidth(), 
+					getHeight()));
+			video.setVideoPath(path);
+			video.setY(getY());
+			video.setX(getX());
+			
+			return video;
 		}
 		
 		return null;
+
 	}
-	
-//	public ImageView getImagem(Context context) {
-//		
-//		ImageView view = new ImageView(context);
-//		view.setLayoutParams(new LayoutParams(getWidth(),getHeight()));
-//		view.setX(getX());
-//		view.setY(getY());
-//
-//		//view.setLayoutParams(new LayoutParams(width, height));
-//		Bitmap bitmap = BitmapFactory.decodeByteArray(background, 0,
-//				background.length);
-//		
-//		view.setImageBitmap(bitmap);
-//		return view;
-//	}
+
 }
