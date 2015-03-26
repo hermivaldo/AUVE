@@ -23,12 +23,6 @@
         </br.com.telas.CustomRl>
 
         <br.com.telas.CustomOptionView
-            android:id="@+id/circulo"
-            android:layout_width="50sp"
-            android:layout_height="50sp"
-            android:background="@drawable/circle_shape" />
-
-        <br.com.telas.CustomOptionView
             android:id="@+id/imagemQuadrada1"
             android:layout_width="50sp"
             android:layout_height="50sp"
@@ -36,24 +30,6 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="66dp"
             android:background="@drawable/shape_border" />
-
-        <br.com.telas.CustomOptionView
-            android:id="@+id/video"
-            android:layout_width="50sp"
-            android:layout_height="50sp"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/imagemQuadrada1"
-            android:layout_marginTop="21dp"
-            android:background="@drawable/shape_border" />
-
-        <br.com.video.CustomViewDraw 
-            android:layout_width="50sp"
-            android:layout_height="50sp"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/video"
-            android:layout_marginTop="21dp"
-            android:background="@drawable/shape_border"
-            />
     </RelativeLayout>
 
 </LinearLayout>

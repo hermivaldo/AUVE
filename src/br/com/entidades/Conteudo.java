@@ -1,19 +1,20 @@
 package br.com.entidades;
 
-import java.io.ByteArrayOutputStream;
-
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.VideoView;
-import br.com.refac.CustomImgView;
-import br.com.refac.ImagemCirculo;
-import br.com.telas.ActMove;
+import br.com.slide.ActivityFragment;
+import br.com.slide.FragmentAdapter;
 import br.tcc.auve.comple.ViewGestory;
 
 public class Conteudo {
@@ -90,28 +91,53 @@ public class Conteudo {
 	public void setBackground(byte[] background) {
 		this.background = background;
 	}
-
+	@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
 	public View getComponent(Context context) {
 
 		if(path.contains(".jpg")){
-			ViewGestory quadrado = new ViewGestory(context);
+			final ImageView quadrado = new ImageView(context);
 			quadrado.setLayoutParams(new LayoutParams(getWidth(), getHeight()));
 			quadrado.setX(getX());
 			quadrado.setY(getY());
-			Bitmap map = BitmapFactory.decodeFile(path);
-			//map.compress(Bitmap.CompressFormat.PNG, 50, new ByteArrayOutputStream());
+			final Bitmap map = BitmapFactory.decodeFile(path);
 			quadrado.setImageBitmap(map);
+			
+			quadrado.setOnClickListener(new OnClickListener() {
+				
+				
+				@Override
+				public void onClick(View arg0) {
+					ImageView view = new ImageView(quadrado.getContext());
+					view.setImageBitmap(map);
+					ActivityFragment.preso.setContentView(view);
+					ActivityFragment.preso.show();
+				}
+			});
 			return quadrado;
 			
 		}else if (path.contains(".3gp")) {
-			VideoView video = new VideoView(context);
-			MediaController controller = new MediaController(context);
+			final VideoView video = new VideoView(context);
+			final MediaController controller = new MediaController(context);
 			video.setMediaController(controller);
 			video.setLayoutParams(new LayoutParams(getWidth(), 
 					getHeight()));
 			video.setVideoPath(path);
 			video.setY(getY());
 			video.setX(getX());
+			video.setOnTouchListener(new OnTouchListener() {
+				
+				@Override
+				public boolean onTouch(View arg0, MotionEvent arg1) {
+					VideoView vd = new VideoView(video.getContext());
+					vd.setVideoPath(path);
+					vd.setMediaController(controller);
+					//vd.start();
+					ActivityFragment.preso.setContentView(vd);
+					ActivityFragment.preso.show();
+					return false;
+				}
+			});
+		
 			
 			return video;
 		}
