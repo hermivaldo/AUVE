@@ -13,6 +13,8 @@ public class TelaPrincipal extends Activity{
 		setContentView(R.layout.menu);
 	}
 	
+	
+	
 	public void iniciar(View view){
 		startActivity(new Intent(this, ActMove.class));
 	}

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@android:style/Theme.Holo.Light"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+   <LinearLayout
+        android:id="@android:id/content"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:baselineAligned="false"
+        android:orientation="horizontal" >
+             
+        <br.com.telas.CustomRl
+            android:id="@+id/tela"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            
+            android:background="@android:color/darker_gray" >
+
+        </br.com.telas.CustomRl>
+    </LinearLayout>
+
+    <!-- The navigation drawer -->
+
+
+</android.support.v4.widget.DrawerLayout>

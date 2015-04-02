@@ -14,8 +14,6 @@ import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.VideoView;
 import br.com.slide.ActivityFragment;
-import br.com.slide.FragmentAdapter;
-import br.tcc.auve.comple.ViewGestory;
 
 public class Conteudo {
 

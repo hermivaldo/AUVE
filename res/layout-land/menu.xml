@@ -31,11 +31,20 @@
         android:id="@+id/imageButton2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@null"
-        android:onClick="visulizarApre"
         android:layout_alignBottom="@+id/imageButton1"
         android:layout_toRightOf="@+id/imageView1"
+        android:background="@null"
+        android:onClick="visulizarApre"
         android:src="@drawable/apresent" />
+
+    <ImageButton
+        android:id="@+id/imageButton1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView1"
+        android:layout_toLeftOf="@+id/imageView1"
+        android:background="@null"
+        android:src="@drawable/pessoas" />
 
     <ImageButton
         android:id="@+id/imageButton3"
@@ -43,19 +52,8 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/imageView1"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="26dp"
         android:background="@null"
         android:onClick="iniciar"
         android:src="@drawable/touch" />
-
-    <ImageButton
-        android:id="@+id/imageButton1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/imageView1"
-        android:layout_marginLeft="88dp"
-        android:background="@null"
-        android:src="@drawable/pessoas" />
 
 </RelativeLayout>

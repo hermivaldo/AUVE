@@ -30,4 +30,20 @@
         android:layout_marginTop="32dp"
         android:background="@drawable/circle_shape" />
 
+    
+    <!-- Usar a propriedade background como nula
+    para criar um sistema em que se possa selecionar
+    as imagens sem saber que está selecionando
+    um botão. -->
+    <ImageButton
+        android:id="@+id/imageButton1"
+        android:background="@null"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/other"
+        android:layout_marginLeft="47dp"
+        android:layout_marginTop="122dp"
+        android:layout_toRightOf="@+id/image"
+        android:src="@drawable/ic_launcher" />
+
 </RelativeLayout>

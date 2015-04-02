@@ -1,38 +1,44 @@
 package br.com.telas;
 
+import java.util.ArrayList;
+
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Presentation;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.Display;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ListView;
+import br.com.auve.menu.NavDrawItem;
+import br.com.auve.menu.NavDrawerListAdapter;
 import br.com.controlebanco.InserirApren;
 import br.com.fileexplorer.FileChoose;
 import br.com.refac.ViewStatica;
-import br.com.viewhierarchy.ViewServer;
 import br.tcc.auve.regras.LoadComponent;
 
-import com.commonsware.cwac.preso.PresentationHelper;
-
+@SuppressWarnings("deprecation")
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class ActMove extends Activity implements PresentationHelper.Listener {
+public class ActMove extends Activity {
 
 	public static final int REQUEST_PATH = 1;
 	private ViewGroup mView;
 	private ViewGroup mGroup;
-	Presentation preso = null;
-	PresentationHelper helper = null;
 	public static View mViewSelected;
+
+	private DrawerLayout mDrawerLayout;
+	private ListView mList;
+
+	private ActionBarDrawerToggle mDrawerToggle;
 
 	/*
 	 * (non-Javadoc)
@@ -53,43 +59,29 @@ public class ActMove extends Activity implements PresentationHelper.Listener {
 
 		mGroup.addView(mView);
 
-		ViewServer.get(this).addWindow(this);
-		helper = new PresentationHelper(this, this);
-		/*
-		 * Trexo removido para a classe CustomOptionView. Agora todo o conteúdo
-		 * pode ser manipulado diretamente dentro da classe. Não existe a
-		 * necessidade de recriar mais objetos, pois todo o conteúdo será
-		 * manipulado pelo XML.
-		 */
-		// final ViewGroup mGrouRa = (ViewGroup) findViewById(R.id.reP);
-		//
-		// final ImageView circulo = (ImageView) findViewById(R.id.circulo);
-		//
-		// circulo.setOnClickListener(new OnClickListener() {
-		//
-		// @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-		// @Override
-		// public void onClick(View v) {
-		// ImagemQuadrada imagemQuadrada = new ImagemQuadrada(ActMove.this);
-		// int hei = circulo.getLayoutParams().height;
-		// int wid = circulo.getLayoutParams().width;
-		// imagemQuadrada.setLayoutParams(new LayoutParams(wid, hei));
-		// imagemQuadrada.setX(circulo.getX());
-		// imagemQuadrada.setY(circulo.getY());
-		// imagemQuadrada.setBackground(circulo.getBackground());
-		// mGrouRa.addView(imagemQuadrada);
-		// }
-		// });
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+		mList = (ListView) findViewById(R.id.left_drawer);
+
+		ArrayList<NavDrawItem> list = new ArrayList<NavDrawItem>();
+		list.add(new NavDrawItem("Mundo"));
+		list.add(new NavDrawItem("Mundo"));
+
+		NavDrawerListAdapter adapter = new NavDrawerListAdapter(this, list);
+
+		mList.setAdapter(adapter);
+
+		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+				R.drawable.ic_launcher, R.string.app_name, R.string.app_name) {
+		};
+
+		mDrawerLayout.setDrawerListener(mDrawerToggle);
 
 	}
 
-	
-	
 	@Override
 	protected void onResume() {
 
 		super.onResume();
-		helper.onResume();
 		/*
 		 * Permite a verificação apenas se for uma instância de ViewGroup o
 		 * elemento static não pode ser utilizado antes de alguma opção do menu
@@ -106,14 +98,12 @@ public class ActMove extends Activity implements PresentationHelper.Listener {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		ViewServer.get(this).removeWindow(this);
 	}
-	
+
 	@Override
 	protected void onPause() {
 		super.onPause();
-		helper.onPause();
-		ViewServer.get(this).setFocusedWindow(this);
+
 	}
 
 	@Override
@@ -195,17 +185,4 @@ public class ActMove extends Activity implements PresentationHelper.Listener {
 				}).show();
 	}
 
-	@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-	@Override
-	public void clearPreso(boolean arg0) {
-		if (preso != null) {
-			preso.dismiss();
-			preso = null;
-		}
-	}
-
-	@Override
-	public void showPreso(Display arg0) {
-		preso = new SecondScreenDemo(this, arg0);
-	}
 }
