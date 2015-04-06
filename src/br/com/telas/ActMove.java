@@ -26,12 +26,14 @@ import br.com.fileexplorer.FileChoose;
 import br.com.refac.ViewStatica;
 import br.tcc.auve.regras.LoadComponent;
 
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
+
 @SuppressWarnings("deprecation")
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class ActMove extends Activity {
 
 	public static final int REQUEST_PATH = 1;
-	private ViewGroup mView;
 	private ViewGroup mGroup;
 	public static View mViewSelected;
 
@@ -54,10 +56,13 @@ public class ActMove extends Activity {
 
 		mGroup = (ViewGroup) findViewById(android.R.id.content);
 
-		mView = (ViewGroup) getLayoutInflater().inflate(R.layout.la_actmove,
-				null);
+		getLayoutInflater().inflate(R.layout.la_actmove,
+				mGroup);
 
-		mGroup.addView(mView);
+		ViewTarget target = new ViewTarget(findViewById(R.id.drawer_layout));
+		new ShowcaseView.Builder(this).setTarget(target)
+				.setContentTitle("Texto").setContentText("Menu Home")
+				.hideOnTouchOutside().build();
 
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mList = (ListView) findViewById(R.id.left_drawer);
@@ -118,9 +123,6 @@ public class ActMove extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.adicionar:
-			// Toast.makeText(this, mViewSelected.toString(),
-			// Toast.LENGTH_SHORT).show();
-
 			Intent intent1 = new Intent(this, FileChoose.class);
 			startActivityForResult(intent1, REQUEST_PATH);
 			break;
@@ -135,7 +137,6 @@ public class ActMove extends Activity {
 			break;
 		case R.id.salvar:
 			alertSalvar();
-			// ViewStatica.saveObjets((ViewGroup) findViewById(R.id.tela));
 			break;
 		default:
 			break;
@@ -151,7 +152,6 @@ public class ActMove extends Activity {
 
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// super.onActivityResult(requestCode, resultCode, data);
 		if (requestCode == REQUEST_PATH) {
 			if (resultCode == RESULT_OK) {
 
@@ -165,16 +165,18 @@ public class ActMove extends Activity {
 	private void alertSalvar() {
 		final EditText text = new EditText(getBaseContext());
 
-		new AlertDialog.Builder(this).setTitle("Salvar Apresenta��o")
-				.setMessage("Informe o nome da apresenta��o que foi criada")
+		new AlertDialog.Builder(this).setTitle("Salvar Apresentação")
+				.setMessage("Informe o nome da apresentação que foi criada")
 				.setView(text)
 				.setPositiveButton("Salvar", new OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
+						
 						ViewStatica
 								.setViewGroup((ViewGroup) findViewById(R.id.tela));
 						InserirApren inserAp = new InserirApren(ActMove.this);
 						inserAp.inserirApre(text.getText().toString());
+						
 					}
 				}).setNegativeButton("Cancelar", new OnClickListener() {
 

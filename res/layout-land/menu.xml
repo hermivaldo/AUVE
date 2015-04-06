@@ -28,17 +28,17 @@
         android:background="@drawable/logo_bg_menu" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/apresentacao"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/imageButton1"
+        android:layout_alignBottom="@+id/opcoes"
         android:layout_toRightOf="@+id/imageView1"
         android:background="@null"
         android:onClick="visulizarApre"
         android:src="@drawable/apresent" />
 
     <ImageButton
-        android:id="@+id/imageButton1"
+        android:id="@+id/opcoes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/imageView1"
@@ -47,7 +47,7 @@
         android:src="@drawable/pessoas" />
 
     <ImageButton
-        android:id="@+id/imageButton3"
+        android:id="@+id/touch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/imageView1"

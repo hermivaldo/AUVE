@@ -18,7 +18,6 @@ public class ContApresDao {
 
 	private static final String WIDTH = "WIDTH";
 	private static final String HEIGHT = "HEIGHT";
-	private static final String BACKGROUND = "BACKGROUND";
 	private static final String Y = "Y";
 	private static final String X = "X";
 	private static final String ID = "id";
@@ -51,7 +50,6 @@ public class ContApresDao {
 
 				values.put(HEIGHT, imagens.get(im).getHeight());
 				values.put(WIDTH, imagens.get(im).getWidth());
-				//values.put(BACKGROUND, imagens.get(im).getBackground());
 				values.put(Y, imagens.get(im).getY());
 				values.put(X, imagens.get(im).getX());
 				values.put(IDAPRESENT, imagens.get(im).getIdApreds());
@@ -87,7 +85,6 @@ public class ContApresDao {
 
 			imagem.setHeight(curso.getInt(0));
 			imagem.setWidth(curso.getInt(1));
-			//imagem.setBackground(curso.getBlob(2));
 			imagem.setX(curso.getFloat(2));
 			imagem.setY(curso.getFloat(3));
 			imagem.setPath(curso.getString(4));
@@ -111,7 +108,6 @@ public class ContApresDao {
 			Conteudo imagem = new Conteudo();
 			imagem.setHeight(curso.getInt(0));
 			imagem.setWidth(curso.getInt(1));
-			//imagem.setBackground(curso.getBlob(2));
 			imagem.setX(curso.getFloat(2));
 			imagem.setY(curso.getFloat(3));
 			imagem.setPath(curso.getString(4));

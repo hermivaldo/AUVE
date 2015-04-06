@@ -36,7 +36,7 @@
     as imagens sem saber que está selecionando
     um botão. -->
     <ImageButton
-        android:id="@+id/imageButton1"
+        android:id="@+id/opcoes"
         android:background="@null"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -3,22 +3,6 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
-    <!--
-	<Button 
-	    android:text="Criar"
-	    android:layout_height="wrap_content"
-	    android:layout_width="match_parent"
-	    android:onClick="iniciar"
-	    />
-    
-	<Button 
-	    android:text="Aprensetações Criadas"
-	    android:layout_height="wrap_content"
-	    android:layout_width="match_parent"
-	    android:onClick="visulizarApre"
-	    />
-    -->
-
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="wrap_content"
@@ -28,17 +12,17 @@
         android:background="@drawable/logo_bg_menu" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/apresentacao"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@null"
         android:onClick="visulizarApre"
-        android:layout_alignBottom="@+id/imageButton1"
+        android:layout_alignBottom="@+id/opcoes"
         android:layout_toRightOf="@+id/imageView1"
         android:src="@drawable/apresent" />
 
     <ImageButton
-        android:id="@+id/imageButton3"
+        android:id="@+id/touch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/imageView1"
@@ -49,7 +33,7 @@
         android:src="@drawable/touch" />
 
     <ImageButton
-        android:id="@+id/imageButton1"
+        android:id="@+id/opcoes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
