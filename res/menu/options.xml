@@ -5,8 +5,8 @@
 	    android:title="adicionar"
 	    android:showAsAction="ifRoom"/>
     
-	<item android:id="@+id/visu"
-	    android:title="visualizar"
+	<item android:id="@+id/remover"
+	    android:title="Remover"
 	    android:showAsAction="ifRoom"/>
 	
 	<item 

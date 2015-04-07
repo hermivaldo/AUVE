@@ -82,9 +82,7 @@ public class ViewGestory extends ImageView implements OnTouchListener,
 			if (x > 0) {
 				velocidade = (x - (getWidth() / 2));
 			} else {
-				/*
-				 */
-				// v.performClick();
+		
 				velocidade *= -1;
 			}
 			if (y > 0) {
@@ -95,21 +93,21 @@ public class ViewGestory extends ImageView implements OnTouchListener,
 
 			if (x > getWidth() / 2) {
 				setTranslationX(getX() + velocidade);
-				// v.setX(v.getX() + velocidade);
+			
 			}
 			if (x < getWidth() / 2) {
 				setTranslationX(getX() - (-velocidade));
-				// v.setX(v.getX() - (-velocidade));
+			
 			}
 
 			if (y > getHeight() / 2) {
 				setTranslationY(getY() + velocidadeY);
-				// v.setY(v.getY() + velocidadeY);
+				
 			}
 
 			if (y < getHeight() / 2) {
 				setTranslationY(getY() - (-velocidadeY));
-				// v.setY(v.getY() - (-velocidadeY));
+				
 			}
 
 		}
@@ -123,10 +121,16 @@ public class ViewGestory extends ImageView implements OnTouchListener,
 	public boolean onScale(ScaleGestureDetector detector) {
 		scaleFactor *= detector.getScaleFactor();
 		scaleFactor = Math.max(0.1f, Math.min(scaleFactor, 10.0f));
-
+		
 		view.setScaleX(scaleFactor);
 		view.setScaleY(scaleFactor);
 
+		view.getLayoutParams().height =
+				 (int) (view.getHeight() * scaleFactor);
+		
+		view.getLayoutParams().width =
+				 (int) (view.getWidth() * scaleFactor);
+		
 		return true;
 	}
 

@@ -12,6 +12,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -37,7 +38,7 @@ public class ActMove extends Activity {
 	private ViewGroup mGroup;
 	public static View mViewSelected;
 
-	private DrawerLayout mDrawerLayout;
+	public static DrawerLayout mDrawerLayout;
 	private ListView mList;
 
 	private ActionBarDrawerToggle mDrawerToggle;
@@ -59,16 +60,17 @@ public class ActMove extends Activity {
 		getLayoutInflater().inflate(R.layout.la_actmove,
 				mGroup);
 
-		ViewTarget target = new ViewTarget(findViewById(R.id.drawer_layout));
+		ViewTarget target = new ViewTarget(findViewById(R.id.left_drawer));
 		new ShowcaseView.Builder(this).setTarget(target)
-				.setContentTitle("Texto").setContentText("Menu Home")
+				.setContentTitle("Imagem e Vídeo.").setContentText("Essa opção"
+						+ " permite que vídeo e imagens possam ser adicionadas à "
+						+ "sua apresentação")
 				.hideOnTouchOutside().build();
 
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mList = (ListView) findViewById(R.id.left_drawer);
 
 		ArrayList<NavDrawItem> list = new ArrayList<NavDrawItem>();
-		list.add(new NavDrawItem("Mundo"));
 		list.add(new NavDrawItem("Mundo"));
 
 		NavDrawerListAdapter adapter = new NavDrawerListAdapter(this, list);
@@ -80,6 +82,7 @@ public class ActMove extends Activity {
 		};
 
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
+		mDrawerLayout.openDrawer(Gravity.START);
 
 	}
 
@@ -123,17 +126,17 @@ public class ActMove extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.adicionar:
-			Intent intent1 = new Intent(this, FileChoose.class);
-			startActivityForResult(intent1, REQUEST_PATH);
+			if (mViewSelected instanceof View){
+				Intent intent1 = new Intent(this, FileChoose.class);
+				startActivityForResult(intent1, REQUEST_PATH);
+			}
 			break;
-		case R.id.visu:
-			ViewStatica.setViewGroup((ViewGroup) findViewById(R.id.tela));
-			Intent intent = new Intent(this, TelaPreView.class);
-			startActivity(intent);
-			// TODO faz-se a necessidade de criar um validador
-			// da entrada HDMI para utilização desse processo.
-			// preso.setContentView(tela);
-			// preso.show();
+		case R.id.remover:
+			if (mViewSelected instanceof View){
+				ViewGroup parent = (ViewGroup) mViewSelected.getParent();
+				parent.removeView(mViewSelected);
+				mViewSelected = null;
+			}		
 			break;
 		case R.id.salvar:
 			alertSalvar();

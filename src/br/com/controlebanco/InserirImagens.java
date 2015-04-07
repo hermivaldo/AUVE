@@ -19,38 +19,27 @@ public class InserirImagens {
 		for (int ch = 0; ch < group.getChildCount(); ch++) {
 			Conteudo imagem = new Conteudo();
 
-//			imagem.setBackground(getImage(((ImageView) group.getChildAt(ch))
-//					.getDrawable()));
-		/*
+			/*
 			 * Itens a serem obtidos os valores estavam mapeados aos objetos
 			 * errados.
 			 */
 			imagem.setPath(group.getChildAt(ch).getTag().toString());
 			imagem.setClassName(group.getChildAt(ch).getClass().getName());
-			imagem.setHeight((int) (group.getChildAt(ch).getLayoutParams().height
-					* group.getChildAt(ch).getScaleY()) );
-			imagem.setWidth((int) (group.getChildAt(ch).getLayoutParams().width
-					* group.getChildAt(ch).getScaleX()));
+			imagem.setHeight((int) (group.getChildAt(ch).getLayoutParams().height * group
+					.getChildAt(ch).getScaleY()));
+			imagem.setWidth((int) (group.getChildAt(ch).getLayoutParams().width * group
+					.getChildAt(ch).getScaleX()));
 			imagem.setY(group.getChildAt(ch).getY());
 			imagem.setX(group.getChildAt(ch).getX());
 			imagem.setIdApreds(idApres);
 			imagens.add(imagem);
-			
 
 		}
 
 		db = new ContApresDao(group.getContext());
 		db.saveChamados(imagens);
-		
-	}
 
-//	private byte[] getImage(Drawable drawable) {
-//		BitmapDrawable draw = (BitmapDrawable) drawable;
-//		ByteArrayOutputStream stream = new ByteArrayOutputStream();
-//		Bitmap bm = draw.getBitmap();
-//		bm.compress(Bitmap.CompressFormat.PNG, 50, stream);
-//		return stream.toByteArray();
-//	}
+	}
 
 	public ViewGroup painel(Context context) {
 		db = new ContApresDao(context);
@@ -59,7 +48,6 @@ public class InserirImagens {
 		layout.setLayoutParams(new LayoutParams(-1, -1));
 		for (int itPai = 0; itPai < itens.size(); itPai++) {
 			Conteudo img = new Conteudo();
-//			img.setBackground(itens.get(itPai).getBackground());
 			img.setHeight(itens.get(itPai).getHeight());
 			img.setWidth(itens.get(itPai).getWidth());
 			img.setX(itens.get(itPai).getX());
@@ -70,7 +58,7 @@ public class InserirImagens {
 		}
 		return layout;
 	}
-	
+
 	public ViewGroup painel(Context context, int idApre) {
 		db = new ContApresDao(context);
 		List<Conteudo> itens = db.getItens(idApre);
@@ -78,7 +66,6 @@ public class InserirImagens {
 		layout.setLayoutParams(new LayoutParams(-1, -1));
 		for (int itPai = 0; itPai < itens.size(); itPai++) {
 			Conteudo img = new Conteudo();
-//			img.setBackground(itens.get(itPai).getBackground());
 			img.setHeight(itens.get(itPai).getHeight());
 			img.setWidth(itens.get(itPai).getWidth());
 			img.setX(itens.get(itPai).getX());

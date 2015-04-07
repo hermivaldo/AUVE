@@ -3,14 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
-    <br.com.refac.ImagemCirculo 
-        android:id="@+id/image"
-        android:layout_width="50sp"
-        android:layout_height="50sp"
-        style="@drawable/circle_shape"
-        
-        />
+
 
     <TextView
         android:id="@+id/medida"
@@ -20,15 +13,7 @@
         android:layout_alignParentRight="true"
         android:text="qualquer coisa" />
 
-    <br.com.refac.ImagemCirculo
-        android:id="@+id/other"
-        android:layout_width="50sp"
-        android:layout_height="50sp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="166dp"
-        android:layout_marginTop="32dp"
-        android:background="@drawable/circle_shape" />
+
 
     
     <!-- Usar a propriedade background como nula

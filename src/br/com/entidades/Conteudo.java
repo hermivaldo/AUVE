@@ -89,20 +89,20 @@ public class Conteudo {
 	public void setBackground(byte[] background) {
 		this.background = background;
 	}
+
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
 	public View getComponent(Context context) {
 
-		if(path.contains(".jpg")){
+		if (path.contains(".jpg")) {
 			final ImageView quadrado = new ImageView(context);
 			quadrado.setLayoutParams(new LayoutParams(getWidth(), getHeight()));
 			quadrado.setX(getX());
 			quadrado.setY(getY());
 			final Bitmap map = BitmapFactory.decodeFile(path);
 			quadrado.setImageBitmap(map);
-			
+
 			quadrado.setOnClickListener(new OnClickListener() {
-				
-				
+
 				@Override
 				public void onClick(View arg0) {
 					ImageView view = new ImageView(quadrado.getContext());
@@ -112,34 +112,37 @@ public class Conteudo {
 				}
 			});
 			return quadrado;
-			
-		}else if (path.contains(".3gp")) {
+
+		} else if (path.contains(".3gp")) {
 			final VideoView video = new VideoView(context);
-			final MediaController controller = new MediaController(context);
+			final MediaController controller = new MediaController(
+					context);
+		
+			
+			
 			video.setMediaController(controller);
-			video.setLayoutParams(new LayoutParams(getWidth(), 
-					getHeight()));
+			video.setLayoutParams(new LayoutParams(getWidth(), getHeight()));
 			video.setVideoPath(path);
 			video.setY(getY());
 			video.setX(getX());
+
 			video.setOnTouchListener(new OnTouchListener() {
-				
+
 				@Override
 				public boolean onTouch(View arg0, MotionEvent arg1) {
+
 					VideoView vd = new VideoView(video.getContext());
 					vd.setVideoPath(path);
 					vd.setMediaController(controller);
-					//vd.start();
 					ActivityFragment.preso.setContentView(vd);
 					ActivityFragment.preso.show();
 					return false;
 				}
 			});
-		
-			
+
 			return video;
 		}
-		
+
 		return null;
 
 	}

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- File created by the Android Action Bar Style Generator
+<!--
+     File created by the Android Action Bar Style Generator
 
      Copyright (C) 2011 The Android Open Source Project
      Copyright (C) 2012 readyState Software Ltd
@@ -29,10 +30,10 @@
         <item name="android:actionModeBackground">@drawable/cab_background_top_auve</item>
         <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_auve</item>
         <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Auve</item>
-        
-                <!-- Light.DarkActionBar specific -->
-        <item name="android:actionBarWidgetTheme">@style/Theme.Auve.Widget</item>
 
+        <!-- Light.DarkActionBar specific -->
+        <item name="android:actionBarWidgetTheme">@style/Theme.Auve.Widget</item>
+        <item name="android:windowFullscreen">true</item>
     </style>
 
     <style name="ActionBar.Solid.Auve" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
@@ -48,7 +49,7 @@
     </style>
 
     <style name="PopupMenu.Auve" parent="@android:style/Widget.Holo.ListPopupWindow">
-        <item name="android:popupBackground">@drawable/menu_dropdown_panel_auve</item>	
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_auve</item>
     </style>
 
     <style name="DropDownListView.Auve" parent="@android:style/Widget.Holo.ListView.DropDown">
@@ -64,11 +65,11 @@
         <item name="android:popupBackground">@drawable/menu_dropdown_panel_auve</item>
         <item name="android:dropDownSelector">@drawable/selectable_background_auve</item>
     </style>
-    
+
     <style name="ProgressBar.Auve" parent="@android:style/Widget.Holo.ProgressBar.Horizontal">
         <item name="android:progressDrawable">@drawable/progress_horizontal_auve</item>
     </style>
-    
+
     <style name="ActionButton.CloseMode.Auve" parent="@android:style/Widget.Holo.ActionButton.CloseMode">
         <item name="android:background">@drawable/btn_cab_done_auve</item>
     </style>
