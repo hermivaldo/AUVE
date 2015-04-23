@@ -57,7 +57,9 @@ public class CustomOptionView extends View implements OnClickListener{
 		imagemQuadrada.setX(this.getX());
 		imagemQuadrada.setY(this.getY());
 		imagemQuadrada.setBackground(this.getBackground());
-		( (ViewGroup) ((Activity) getContext()).findViewById(R.id.tela)).addView(imagemQuadrada);
+		
+		( (ViewGroup) ((Activity) getContext()).findViewById(R.id.tela)).
+		addView(imagemQuadrada);
 		ActMove.mDrawerLayout.closeDrawers();
 	}
 	

@@ -1,12 +1,13 @@
 package br.tcc.auve.regras;
 
-import br.com.telas.ActMove;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.VideoView;
+import br.com.telas.ActMove;
 
 public class LoadComponent {
 
@@ -18,15 +19,17 @@ public class LoadComponent {
 	
 	
 	public void component(String comp){
-		if (comp.contains(".jpg")){
+		if (comp.contains(".jpg") || comp.contains(".pgn")){
 			ImageView view = (ImageView) ActMove.mViewSelected;
 			
 			view.setBackground(null);
 			view.setTag(comp);
-			view.setImageBitmap(BitmapFactory.decodeFile(comp));
+			Bitmap mBitmap = BitmapFactory.decodeFile(comp);
+			mBitmap = Bitmap.createScaledBitmap(mBitmap, 300, 300, true);
+			view.setImageBitmap(mBitmap);
 			
 		}
-		else if (comp.contains(".3gp")){
+		else if (comp.contains(".3gp") || comp.contains(".mp4")){
 			VideoView video = new VideoView(group.getContext());
 			MediaController controller = new MediaController(ActMove.mViewSelected.getContext());
 			video.setMediaController(controller);

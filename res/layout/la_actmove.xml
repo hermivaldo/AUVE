@@ -19,11 +19,17 @@
             android:layout_weight="1"
             android:orientation="vertical" >
 
-            <br.com.telas.CustomRl
-                android:id="@+id/tela"
+            <ScrollView
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent" >
-            </br.com.telas.CustomRl>
+                    android:layout_height="wrap_content">
+
+                <br.com.telas.CustomRl
+                    android:id="@+id/tela"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" >
+                </br.com.telas.CustomRl>
+            </ScrollView>
+            
         </RelativeLayout>
     </LinearLayout>
 

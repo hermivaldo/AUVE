@@ -12,6 +12,7 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.MediaController;
+import android.widget.RelativeLayout;
 import android.widget.VideoView;
 import br.com.slide.ActivityFragment;
 
@@ -93,33 +94,35 @@ public class Conteudo {
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
 	public View getComponent(Context context) {
 
-		if (path.contains(".jpg")) {
+		if (path.contains(".jpg") || path.contains(".png")) {
 			final ImageView quadrado = new ImageView(context);
-			quadrado.setLayoutParams(new LayoutParams(getWidth(), getHeight()));
+			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(getWidth(), getHeight());
+			
+			quadrado.setLayoutParams(params);
 			quadrado.setX(getX());
 			quadrado.setY(getY());
-			final Bitmap map = BitmapFactory.decodeFile(path);
-			quadrado.setImageBitmap(map);
+			Bitmap mBitmap = BitmapFactory.decodeFile(path);
+			mBitmap = Bitmap.createScaledBitmap(mBitmap, 300, 300, true);
+			quadrado.setImageBitmap(mBitmap);
 
+			
+			
 			quadrado.setOnClickListener(new OnClickListener() {
 
 				@Override
 				public void onClick(View arg0) {
 					ImageView view = new ImageView(quadrado.getContext());
-					view.setImageBitmap(map);
+					view.setImageBitmap(BitmapFactory.decodeFile(path));
 					ActivityFragment.preso.setContentView(view);
 					ActivityFragment.preso.show();
 				}
 			});
 			return quadrado;
 
-		} else if (path.contains(".3gp")) {
+		} else if (path.contains(".3gp") || path.contains(".mp4")) {
 			final VideoView video = new VideoView(context);
-			final MediaController controller = new MediaController(
-					context);
-		
-			
-			
+			final MediaController controller = new MediaController(context);
+
 			video.setMediaController(controller);
 			video.setLayoutParams(new LayoutParams(getWidth(), getHeight()));
 			video.setVideoPath(path);

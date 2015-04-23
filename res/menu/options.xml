@@ -14,5 +14,11 @@
 	    android:title="salvar"
 	    android:showAsAction="always"
 	    />
+	<item 
+	    android:id="@+id/atualizar"
+	    android:title="Atualizar"
+	     android:showAsAction="always"
+	    android:visible="false"
+	    />
 	
 </menu>

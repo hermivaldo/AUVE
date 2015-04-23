@@ -4,11 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.GridView;
 import android.widget.RelativeLayout;
 import br.com.banco.ContApresDao;
 import br.com.entidades.Conteudo;
+import br.com.viewhierarchy.BaseAdapter;
 
 public class InserirImagens {
 
@@ -62,18 +66,19 @@ public class InserirImagens {
 	public ViewGroup painel(Context context, int idApre) {
 		db = new ContApresDao(context);
 		List<Conteudo> itens = db.getItens(idApre);
-		RelativeLayout layout = new RelativeLayout(context);
-		layout.setLayoutParams(new LayoutParams(-1, -1));
-		for (int itPai = 0; itPai < itens.size(); itPai++) {
-			Conteudo img = new Conteudo();
-			img.setHeight(itens.get(itPai).getHeight());
-			img.setWidth(itens.get(itPai).getWidth());
-			img.setX(itens.get(itPai).getX());
-			img.setY(itens.get(itPai).getY());
-			img.setPath(itens.get(itPai).getPath());
-			img.setClassName(itens.get(itPai).getClassName());
-			layout.addView(img.getComponent(context));
-		}
+
+		GridView layout = new GridView(context);
+		layout.setGravity(Gravity.CENTER);
+		layout.setStretchMode(GridView.STRETCH_COLUMN_WIDTH);
+		layout.setNumColumns(5);
+
+		layout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
+				LayoutParams.MATCH_PARENT));
+
+		BaseAdapter adapter = new BaseAdapter(context, itens);
+
+		layout.setAdapter(adapter);
+
 		return layout;
 	}
 

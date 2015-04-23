@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 import br.com.auve.menu.NavDrawItem;
 import br.com.auve.menu.NavDrawerListAdapter;
 import br.com.controlebanco.InserirApren;
@@ -42,7 +43,9 @@ public class ActMove extends Activity {
 	private ListView mList;
 
 	private ActionBarDrawerToggle mDrawerToggle;
+	private Menu menu;
 
+	private String identApresent;
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -116,6 +119,7 @@ public class ActMove extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		this.menu = menu;
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.options, menu);
 		return super.onCreateOptionsMenu(menu);
@@ -139,12 +143,23 @@ public class ActMove extends Activity {
 			}		
 			break;
 		case R.id.salvar:
-			alertSalvar();
+			/*
+			 * Alterado para dentro da classe
+			 * responsável pela confirmação de salvar
+			 * para evitar que o conteúdo venha a mudar caso o 
+			 * processo seje cancelado.
+			 */
+			
+			alertSalvar(item);
+			break;
+		case R.id.atualizar:
+			// TODO Implementar lógica para atualizar conteúdo
+			Toast.makeText(this, "O nome da apresentação é : " + identApresent, Toast.LENGTH_SHORT).show();
 			break;
 		default:
 			break;
 		}
-
+		
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -165,7 +180,7 @@ public class ActMove extends Activity {
 		}
 	}
 
-	private void alertSalvar() {
+	private void alertSalvar(final MenuItem item) {
 		final EditText text = new EditText(getBaseContext());
 
 		new AlertDialog.Builder(this).setTitle("Salvar Apresentação")
@@ -178,7 +193,13 @@ public class ActMove extends Activity {
 						ViewStatica
 								.setViewGroup((ViewGroup) findViewById(R.id.tela));
 						InserirApren inserAp = new InserirApren(ActMove.this);
-						inserAp.inserirApre(text.getText().toString());
+						// Definir o nome da apresentação para ser localizada, depois
+						// para poder realizar o Update da apresentação.
+						identApresent = text.getText().toString();
+						inserAp.inserirApre(identApresent);
+						// Remove e adiciona o conteúdo apenas se salvo no sistema.
+						item.setVisible(false);
+						menu.getItem(3).setVisible(true);
 						
 					}
 				}).setNegativeButton("Cancelar", new OnClickListener() {
