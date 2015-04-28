@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import br.com.entidades.Conteudo;
 import br.com.telas.R;
 
-public class BaseAdapter extends android.widget.BaseAdapter {
+public class BaseAdapter extends android.widget.BaseAdapter{
 
 	private Context context;
 	private final List<Conteudo> views;
@@ -18,7 +18,7 @@ public class BaseAdapter extends android.widget.BaseAdapter {
 		this.context = context;
 		this.views = views;
 	}
-
+	
 	@Override
 	public int getCount() {
 		return views.size();
@@ -50,10 +50,12 @@ public class BaseAdapter extends android.widget.BaseAdapter {
 		img.setWidth(views.get(position).getWidth());
 		img.setPath(views.get(position).getPath());
 		img.setClassName(views.get(position).getClassName());
-
-		((ViewGroup) grid).addView(img.getComponent(context));
+		View tmp = img.getComponent(context);
+		((ViewGroup) grid).addView(tmp);
 
 		return grid;
 	}
+
+	
 
 }

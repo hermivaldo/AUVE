@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
@@ -15,6 +16,7 @@ import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.VideoView;
 import br.com.slide.ActivityFragment;
+import br.com.telas.R;
 
 public class Conteudo {
 
@@ -27,6 +29,8 @@ public class Conteudo {
 	private String path;
 	private String className;
 
+	static View selectedView;
+	
 	public String getPath() {
 		return path;
 	}
@@ -108,9 +112,10 @@ public class Conteudo {
 			
 			
 			quadrado.setOnClickListener(new OnClickListener() {
-
+				
 				@Override
 				public void onClick(View arg0) {
+					selectedView(quadrado);
 					ImageView view = new ImageView(quadrado.getContext());
 					view.setImageBitmap(BitmapFactory.decodeFile(path));
 					ActivityFragment.preso.setContentView(view);
@@ -133,7 +138,7 @@ public class Conteudo {
 
 				@Override
 				public boolean onTouch(View arg0, MotionEvent arg1) {
-
+					selectedView(video);
 					VideoView vd = new VideoView(video.getContext());
 					vd.setVideoPath(path);
 					vd.setMediaController(controller);
@@ -148,6 +153,17 @@ public class Conteudo {
 
 		return null;
 
+	}
+	
+	private void selectedView(View v){
+		if (selectedView == null){
+			selectedView = v;
+			((ViewGroup) selectedView.getParent()).setBackgroundResource(R.drawable.shapeborder);
+		}else if (selectedView != v){
+			((ViewGroup) selectedView.getParent()).setBackgroundResource(R.drawable.shape_border);
+			selectedView = v;
+			((ViewGroup) selectedView.getParent()).setBackgroundResource(R.drawable.shapeborder);
+		}
 	}
 
 }

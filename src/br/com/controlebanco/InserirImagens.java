@@ -76,7 +76,7 @@ public class InserirImagens {
 				LayoutParams.MATCH_PARENT));
 
 		BaseAdapter adapter = new BaseAdapter(context, itens);
-
+		
 		layout.setAdapter(adapter);
 
 		return layout;
