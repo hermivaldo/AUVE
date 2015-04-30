@@ -13,6 +13,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Display;
 import android.view.View;
+import animations.ZoomOutPage;
 import br.com.controlebanco.InserirApren;
 import br.com.entidades.Apresentacao;
 import br.com.telas.R;
@@ -31,6 +32,7 @@ public class ActivityFragment extends FragmentActivity implements PresentationHe
 		
 		setContentView(R.layout.viewpagefragment);
 		ViewPager page = (ViewPager) findViewById(R.id.page);
+		page.setPageTransformer(true, new ZoomOutPage());
 		ArrayList<Apresentacao> lista = new InserirApren(this).getAllApre();
 		PagerAdapter adapter = new FragmentAdapter(getFragmentManager(),lista);
 		page.setAdapter(adapter);
