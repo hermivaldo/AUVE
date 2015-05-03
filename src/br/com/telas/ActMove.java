@@ -183,7 +183,7 @@ public class ActMove extends Activity {
 	private void alertSalvar(final MenuItem item) {
 		final EditText text = new EditText(getBaseContext());
 
-		new AlertDialog.Builder(this).setTitle("Salvar Apresentação")
+		new AlertDialog.Builder(this,AlertDialog.THEME_HOLO_DARK).setTitle("Salvar Apresentação")
 				.setMessage("Informe o nome da apresentação que foi criada")
 				.setView(text)
 				.setPositiveButton("Salvar", new OnClickListener() {
@@ -208,7 +208,8 @@ public class ActMove extends Activity {
 					public void onClick(DialogInterface dialog, int which) {
 
 					}
-				}).show();
+				})
+				.show();
 	}
 
 }

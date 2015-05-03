@@ -98,7 +98,9 @@ public class Conteudo {
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
 	public View getComponent(Context context) {
 
-		if (path.contains(".jpg") || path.contains(".png")) {
+		if (path.contains(".jpg") || path.contains(".png") ||
+				path.contains(".PNG")
+				|| path.contains(".JPG") || path.contains(".bmp") || path.contains(".BMP")) {
 			final ImageView quadrado = new ImageView(context);
 			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(getWidth(), getHeight());
 			
