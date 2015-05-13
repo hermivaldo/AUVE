@@ -99,7 +99,7 @@ public class Conteudo {
 	public View getComponent(Context context) {
 
 		if (path.contains(".jpg") || path.contains(".png") ||
-				path.contains(".PNG")
+				path.contains(".PNG") || path.contains(".JPEG")  || path.contains(".jpeg")
 				|| path.contains(".JPG") || path.contains(".bmp") || path.contains(".BMP")) {
 			final ImageView quadrado = new ImageView(context);
 			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(getWidth(), getHeight());

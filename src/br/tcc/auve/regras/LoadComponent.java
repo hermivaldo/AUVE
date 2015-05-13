@@ -20,11 +20,12 @@ public class LoadComponent {
 	
 	public void component(String comp){
 		if (comp.contains(".jpg") || comp.contains(".pgn") || comp.contains(".PNG")
-				|| comp.contains(".JPG") || comp.contains(".bmp") || comp.contains(".BMP")){
+				|| comp.contains(".JPG") || comp.contains(".JPEG") || comp.contains(".jpeg") || comp.contains(".bmp") || comp.contains(".BMP")){
 			ImageView view = (ImageView) ActMove.mViewSelected;
 			
 			view.setBackground(null);
 			view.setTag(comp);
+			view.setScaleType(ImageView.ScaleType.FIT_XY);
 			Bitmap mBitmap = BitmapFactory.decodeFile(comp);
 			mBitmap = Bitmap.createScaledBitmap(mBitmap, 300, 300, true);
 			view.setImageBitmap(mBitmap);
