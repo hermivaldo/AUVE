@@ -7,21 +7,21 @@
 
     <LinearLayout
         android:id="@android:id/content"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:baselineAligned="false"
-        android:orientation="horizontal" >
+        android:orientation="vertical" >
 
         <RelativeLayout
             android:id="@+id/reP"
-            android:layout_width="0sp"
-            android:layout_height="fill_parent"
+            android:layout_width="fill_parent"
+            android:layout_height="0sp"
             android:layout_weight="1"
             android:orientation="vertical" >
 
             <ScrollView
                 android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
+                android:layout_height="wrap_content" >
 
                 <br.com.telas.CustomRl
                     android:id="@+id/tela"
@@ -29,8 +29,20 @@
                     android:layout_height="wrap_content" >
                 </br.com.telas.CustomRl>
             </ScrollView>
-            
         </RelativeLayout>
+
+        
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:orientation="vertical" >
+
+            <ListView
+                android:id="@+id/lista_img_pre"
+                android:layout_width="wrap_content"
+                android:layout_height="150sp" >
+            </ListView>
+        </LinearLayout>
     </LinearLayout>
 
     <ListView

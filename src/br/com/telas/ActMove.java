@@ -26,6 +26,7 @@ import br.com.auve.menu.NavDrawerListAdapter;
 import br.com.controlebanco.InserirApren;
 import br.com.fileexplorer.FileChoose;
 import br.com.refac.ViewStatica;
+import br.tcc.auve.comple.ListViewPreviewFolder;
 import br.tcc.auve.regras.LoadComponent;
 
 import com.github.amlcurran.showcaseview.ShowcaseView;
@@ -46,6 +47,7 @@ public class ActMove extends Activity {
 	private Menu menu;
 
 	private String identApresent;
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -60,15 +62,17 @@ public class ActMove extends Activity {
 
 		mGroup = (ViewGroup) findViewById(android.R.id.content);
 
-		getLayoutInflater().inflate(R.layout.la_actmove,
-				mGroup);
+		getLayoutInflater().inflate(R.layout.la_actmove, mGroup);
 
 		ViewTarget target = new ViewTarget(findViewById(R.id.left_drawer));
-		new ShowcaseView.Builder(this).setTarget(target)
-				.setContentTitle("Imagem e Vídeo.").setContentText("Essa opção"
-						+ " permite que vídeo e imagens possam ser adicionadas à "
-						+ "sua apresentação")
-				.hideOnTouchOutside().build();
+		new ShowcaseView.Builder(this)
+				.setTarget(target)
+				.setContentTitle("Imagem e Vídeo.")
+				.setContentText(
+						"Essa opção"
+								+ " permite que vídeo e imagens possam ser adicionadas à "
+								+ "sua apresentação").hideOnTouchOutside()
+				.build();
 
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mList = (ListView) findViewById(R.id.left_drawer);
@@ -130,36 +134,35 @@ public class ActMove extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.adicionar:
-			if (mViewSelected instanceof View){
-				Intent intent1 = new Intent(this, FileChoose.class);
-				startActivityForResult(intent1, REQUEST_PATH);
-			}
+			Intent intent1 = new Intent(this, FileChoose.class);
+			startActivityForResult(intent1, REQUEST_PATH);
+
 			break;
 		case R.id.remover:
-			if (mViewSelected instanceof View){
+			if (mViewSelected instanceof View) {
 				ViewGroup parent = (ViewGroup) mViewSelected.getParent();
 				parent.removeView(mViewSelected);
 				mViewSelected = null;
-			}		
+			}
 			break;
 		case R.id.salvar:
 			/*
-			 * Alterado para dentro da classe
-			 * responsável pela confirmação de salvar
-			 * para evitar que o conteúdo venha a mudar caso o 
-			 * processo seje cancelado.
+			 * Alterado para dentro da classe responsável pela confirmação de
+			 * salvar para evitar que o conteúdo venha a mudar caso o processo
+			 * seje cancelado.
 			 */
-			
+
 			alertSalvar(item);
 			break;
 		case R.id.atualizar:
 			// TODO Implementar lógica para atualizar conteúdo
-			Toast.makeText(this, "O nome da apresentação é : " + identApresent, Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "O nome da apresentação é : " + identApresent,
+					Toast.LENGTH_SHORT).show();
 			break;
 		default:
 			break;
 		}
-		
+
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -173,8 +176,16 @@ public class ActMove extends Activity {
 		if (requestCode == REQUEST_PATH) {
 			if (resultCode == RESULT_OK) {
 
-				new LoadComponent((ViewGroup) findViewById(R.id.tela))
-						.component(data.getStringExtra("GetFileName"));
+				ArrayList<String> caminhos = new LoadComponent()
+						.createList(data.getStringExtra("GetFileName"));
+
+				ListViewPreviewFolder baseList = new ListViewPreviewFolder(
+						this, caminhos, (ViewGroup) findViewById(R.id.tela));
+
+				ListView lista = (ListView) findViewById(R.id.lista_img_pre);
+				lista.setAdapter(baseList);
+				// new LoadComponent((ViewGroup) findViewById(R.id.tela))
+				// .component(data.getStringExtra("GetFileName"));
 
 			}
 		}
@@ -183,24 +194,27 @@ public class ActMove extends Activity {
 	private void alertSalvar(final MenuItem item) {
 		final EditText text = new EditText(getBaseContext());
 
-		new AlertDialog.Builder(this,AlertDialog.THEME_HOLO_DARK).setTitle("Salvar Apresentação")
+		new AlertDialog.Builder(this, AlertDialog.THEME_HOLO_DARK)
+				.setTitle("Salvar Apresentação")
 				.setMessage("Informe o nome da apresentação que foi criada")
 				.setView(text)
 				.setPositiveButton("Salvar", new OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						
+
 						ViewStatica
 								.setViewGroup((ViewGroup) findViewById(R.id.tela));
 						InserirApren inserAp = new InserirApren(ActMove.this);
-						// Definir o nome da apresentação para ser localizada, depois
+						// Definir o nome da apresentação para ser localizada,
+						// depois
 						// para poder realizar o Update da apresentação.
 						identApresent = text.getText().toString();
 						inserAp.inserirApre(identApresent);
-						// Remove e adiciona o conteúdo apenas se salvo no sistema.
+						// Remove e adiciona o conteúdo apenas se salvo no
+						// sistema.
 						item.setVisible(false);
 						menu.getItem(3).setVisible(true);
-						
+
 					}
 				}).setNegativeButton("Cancelar", new OnClickListener() {
 
@@ -208,8 +222,7 @@ public class ActMove extends Activity {
 					public void onClick(DialogInterface dialog, int which) {
 
 					}
-				})
-				.show();
+				}).show();
 	}
 
 }

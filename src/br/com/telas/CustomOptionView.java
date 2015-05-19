@@ -11,27 +11,26 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import br.tcc.auve.comple.ViewGestory;
 
-
-public class CustomOptionView extends View implements OnClickListener{
+public class CustomOptionView extends View implements OnClickListener {
 
 	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
 	public CustomOptionView(Context context, AttributeSet attrs,
 			int defStyleAttr, int defStyleRes) {
 		super(context, attrs, defStyleAttr, defStyleRes);
-		// TODO Auto-generated constructor stub
+
 		setOnClickListener(this);
 	}
 
 	public CustomOptionView(Context context, AttributeSet attrs,
 			int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
-		// TODO Auto-generated constructor stub
+
 		setOnClickListener(this);
 	}
 
 	public CustomOptionView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		// TODO Auto-generated constructor stub
+
 		setOnClickListener(this);
 	}
 
@@ -44,24 +43,22 @@ public class CustomOptionView extends View implements OnClickListener{
 	public boolean isInEditMode() {
 		return super.isInEditMode();
 	}
-	
+
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 	@Override
 	public void onClick(View v) {
 		View imagemQuadrada = null;
-		
+
 		imagemQuadrada = new ViewGestory(getContext());
-		
-		
+
 		imagemQuadrada.setLayoutParams(new LayoutParams(200, 200));
 		imagemQuadrada.setX(this.getX());
 		imagemQuadrada.setY(this.getY());
 		imagemQuadrada.setBackground(this.getBackground());
-		
-		( (ViewGroup) ((Activity) getContext()).findViewById(R.id.tela)).
-		addView(imagemQuadrada);
+
+		((ViewGroup) ((Activity) getContext()).findViewById(R.id.tela))
+				.addView(imagemQuadrada);
 		ActMove.mDrawerLayout.closeDrawers();
 	}
-	
-	
+
 }

@@ -2,21 +2,22 @@ package br.com.entidades;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
+import android.renderscript.RenderScript.Priority;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.MediaController;
-import android.widget.RelativeLayout;
 import android.widget.VideoView;
 import br.com.slide.ActivityFragment;
-import br.com.telas.R;
+
+import com.squareup.picasso.Picasso;
 
 public class Conteudo {
 
@@ -28,11 +29,13 @@ public class Conteudo {
 	private byte[] background;
 	private String path;
 	private String className;
-
+	
+	
 	static View selectedView;
 	
 	public String getPath() {
 		return path;
+		
 	}
 
 	public void setPath(String path) {
@@ -97,27 +100,19 @@ public class Conteudo {
 
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
 	public View getComponent(Context context) {
-
+		
+		View result = null;
+		
 		if (path.contains(".jpg") || path.contains(".png") ||
 				path.contains(".PNG") || path.contains(".JPEG")  || path.contains(".jpeg")
 				|| path.contains(".JPG") || path.contains(".bmp") || path.contains(".BMP")) {
 			final ImageView quadrado = new ImageView(context);
-			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(getWidth(), getHeight());
-			
-			quadrado.setLayoutParams(params);
-			quadrado.setX(getX());
-			quadrado.setY(getY());
-			Bitmap mBitmap = BitmapFactory.decodeFile(path);
-			mBitmap = Bitmap.createScaledBitmap(mBitmap, 300, 300, true);
-			quadrado.setImageBitmap(mBitmap);
-
-			
+			Picasso.with(context).load("file:///"+path).resize(300, 300).into(quadrado);			
 			
 			quadrado.setOnClickListener(new OnClickListener() {
 				
 				@Override
 				public void onClick(View arg0) {
-					selectedView(quadrado);
 					ImageView view = new ImageView(quadrado.getContext());
 					view.setImageBitmap(BitmapFactory.decodeFile(path));
 					ActivityFragment.preso.setContentView(view);
@@ -131,16 +126,13 @@ public class Conteudo {
 			final MediaController controller = new MediaController(context);
 
 			video.setMediaController(controller);
-			video.setLayoutParams(new LayoutParams(getWidth(), getHeight()));
+			video.setLayoutParams(new AbsListView.LayoutParams(300, 300));
 			video.setVideoPath(path);
-			video.setY(getY());
-			video.setX(getX());
-
+			result = video;
 			video.setOnTouchListener(new OnTouchListener() {
 
 				@Override
 				public boolean onTouch(View arg0, MotionEvent arg1) {
-					selectedView(video);
 					VideoView vd = new VideoView(video.getContext());
 					vd.setVideoPath(path);
 					vd.setMediaController(controller);
@@ -150,22 +142,12 @@ public class Conteudo {
 				}
 			});
 
-			return video;
 		}
 
-		return null;
+		return result;
 
 	}
 	
-	private void selectedView(View v){
-		if (selectedView == null){
-			selectedView = v;
-			((ViewGroup) selectedView.getParent()).setBackgroundResource(R.drawable.shapeborder);
-		}else if (selectedView != v){
-			((ViewGroup) selectedView.getParent()).setBackgroundResource(R.drawable.shape_border);
-			selectedView = v;
-			((ViewGroup) selectedView.getParent()).setBackgroundResource(R.drawable.shapeborder);
-		}
-	}
+	
 
 }

@@ -69,8 +69,7 @@ public class FileChoose extends ListActivity{
 				}
 			}
 		} catch (Exception e) {
-			// Toast.makeText(this, "Folder Clicked: "+ currentDir,
-			// Toast.LENGTH_SHORT).show();
+			
 		}
 
 		dir.addAll(fls);
@@ -84,15 +83,12 @@ public class FileChoose extends ListActivity{
 
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
-		// TODO Auto-generated method stub
 		super.onListItemClick(l, v, position, id);
 		Item o = adapter.getItem(position);
-		if (o.getImage().equalsIgnoreCase("directory_icon")
-				|| o.getImage().equalsIgnoreCase("directory_up")) {
-			currentDir = new File(o.getPath());
-			fill(currentDir);
-		} else {
+		if (o.getImage().equalsIgnoreCase("directory_icon")) {
 			onFileClick(o);
+		} else if (o.getImage().equalsIgnoreCase("directory_up")){
+			currentDir = new File(o.getPath());
 		}
 	}
 

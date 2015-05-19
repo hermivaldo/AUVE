@@ -13,7 +13,6 @@ public class BaseAdapter extends android.widget.BaseAdapter{
 
 	private Context context;
 	private final List<Conteudo> views;
-
 	public BaseAdapter(Context context, List<Conteudo> views) {
 		this.context = context;
 		this.views = views;
@@ -39,19 +38,18 @@ public class BaseAdapter extends android.widget.BaseAdapter{
 		LayoutInflater inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-		View grid;
-
-		grid = new View(context);
-
-		grid = inflater.inflate(R.layout.layout_grid, null);
+		View grid = inflater.inflate(R.layout.layout_grid, null);
+		
 
 		Conteudo img = new Conteudo();
 		img.setHeight(views.get(position).getHeight());
 		img.setWidth(views.get(position).getWidth());
 		img.setPath(views.get(position).getPath());
+		
 		img.setClassName(views.get(position).getClassName());
-		View tmp = img.getComponent(context);
-		((ViewGroup) grid).addView(tmp);
+		grid = img.getComponent(context);
+		
+		
 
 		return grid;
 	}

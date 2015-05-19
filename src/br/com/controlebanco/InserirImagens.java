@@ -5,7 +5,6 @@ import java.util.List;
 
 import android.content.Context;
 import android.view.Gravity;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.GridView;
@@ -72,13 +71,14 @@ public class InserirImagens {
 		layout.setStretchMode(GridView.STRETCH_COLUMN_WIDTH);
 		layout.setNumColumns(5);
 
-		layout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
-				LayoutParams.MATCH_PARENT));
+//		layout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
+//				LayoutParams.MATCH_PARENT));
 
+		
 		BaseAdapter adapter = new BaseAdapter(context, itens);
 		
 		layout.setAdapter(adapter);
-
+		layout.requestLayout();
 		return layout;
 	}
 
