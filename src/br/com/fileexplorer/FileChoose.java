@@ -13,13 +13,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 import br.com.telas.R;
+import br.tcc.auve.regras.Alert;
+import br.tcc.auve.regras.LoadComponent;
 
-public class FileChoose extends ListActivity{
+public class FileChoose extends ListActivity {
 	private File currentDir;
 	private FileAdapter adapter;
 	/*
-	 * Adicionada para simulação de erros
-	 * que podem acontecer utilizando a activity.
+	 * Adicionada para simulação de erros que podem acontecer utilizando a
+	 * activity.
 	 */
 	private static FileChoose actFile;
 
@@ -31,8 +33,8 @@ public class FileChoose extends ListActivity{
 		fill(currentDir);
 		actFile = this;
 	}
-	
-	public static FileChoose getInstance(){
+
+	public static FileChoose getInstance() {
 		return actFile;
 	}
 
@@ -69,15 +71,14 @@ public class FileChoose extends ListActivity{
 				}
 			}
 		} catch (Exception e) {
-			
+
 		}
 
 		dir.addAll(fls);
 		if (!f.getName().equalsIgnoreCase("sdcard"))
 			dir.add(0, new Item("..", "Parent Directory", "", f.getParent(),
 					"directory_up"));
-		adapter = new FileAdapter(FileChoose.this, R.layout.list_file,
-				dir);
+		adapter = new FileAdapter(FileChoose.this, R.layout.list_file, dir);
 		this.setListAdapter(adapter);
 	}
 
@@ -87,17 +88,28 @@ public class FileChoose extends ListActivity{
 		Item o = adapter.getItem(position);
 		if (o.getImage().equalsIgnoreCase("directory_icon")) {
 			onFileClick(o);
-		} else if (o.getImage().equalsIgnoreCase("directory_up")){
+		} else if (o.getImage().equalsIgnoreCase("directory_up")) {
 			currentDir = new File(o.getPath());
+		} else {
+			new Alert().alerta(actFile, "Error de seleção",
+					"O conteúdo selecionado não é uma pasta");
 		}
 	}
 
 	private void onFileClick(Item o) {
-		Intent intent = new Intent();
-		intent.putExtra("GetPath", currentDir.toString());
-		intent.putExtra("GetFileName", o.getPath());
-		setResult(RESULT_OK, intent);
-		finish();
+		if (new LoadComponent().createList(o.getPath()).size() > 0) {
+			Intent intent = new Intent();
+			intent.putExtra("GetPath", currentDir.toString());
+			intent.putExtra("GetFileName", o.getPath());
+			setResult(RESULT_OK, intent);
+			finish();
+		} else {
+
+			new Alert().alerta(actFile, "Alerta Sobre pasta selecionada",
+					"A pasta selecionada não contém arquivos que possam"
+							+ " ser manipulados pelo aplicativo");
+
+		}
 	}
-	
+
 }

@@ -70,11 +70,7 @@ public class InserirImagens {
 		layout.setGravity(Gravity.CENTER);
 		layout.setStretchMode(GridView.STRETCH_COLUMN_WIDTH);
 		layout.setNumColumns(5);
-
-//		layout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
-//				LayoutParams.MATCH_PARENT));
-
-		
+	
 		BaseAdapter adapter = new BaseAdapter(context, itens);
 		
 		layout.setAdapter(adapter);

@@ -5,20 +5,16 @@ import java.util.ArrayList;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.media.ThumbnailUtils;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
-import android.widget.VideoView;
 import br.com.telas.R;
 import br.tcc.auve.regras.LoadComponent;
 
@@ -86,12 +82,15 @@ public class ListViewPreviewFolder extends BaseAdapter {
 				la.addView(img);
 
 			} else if (caminhos.get(i).contains(".mp4")
-					|| caminhos.get(i).contains(".MP4")) {
+					|| caminhos.get(i).contains(".MP4")
+					|| caminhos.get(i).contains(".3gp")
+					|| caminhos.get(i).contains(".3GP")) {
 				img = new ImageView(context);
 				Bitmap bMap = ThumbnailUtils
 						.createVideoThumbnail(caminhos.get(i),
 								MediaStore.Video.Thumbnails.MINI_KIND);
-				((ImageView) img).setImageBitmap(bMap);
+				((ImageView) img).setImageResource(R.drawable.mp_logo);
+				((ImageView) img).setBackground(new BitmapDrawable(context.getResources(), bMap));
 				img.setOnClickListener(new OnClickListener() {
 
 					@Override

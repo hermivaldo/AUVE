@@ -2,20 +2,18 @@ package br.com.entidades;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.media.ThumbnailUtils;
 import android.os.Build;
-import android.renderscript.RenderScript.Priority;
-import android.util.Log;
-import android.view.MotionEvent;
+import android.provider.MediaStore;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.AbsListView;
 import android.widget.ImageView;
-import android.widget.MediaController;
 import android.widget.VideoView;
 import br.com.slide.ActivityFragment;
+import br.com.telas.R;
 
 import com.squareup.picasso.Picasso;
 
@@ -29,13 +27,12 @@ public class Conteudo {
 	private byte[] background;
 	private String path;
 	private String className;
-	
-	
+
 	static View selectedView;
-	
+
 	public String getPath() {
 		return path;
-		
+
 	}
 
 	public void setPath(String path) {
@@ -100,17 +97,19 @@ public class Conteudo {
 
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
 	public View getComponent(Context context) {
-		
+
 		View result = null;
-		
-		if (path.contains(".jpg") || path.contains(".png") ||
-				path.contains(".PNG") || path.contains(".JPEG")  || path.contains(".jpeg")
-				|| path.contains(".JPG") || path.contains(".bmp") || path.contains(".BMP")) {
+
+		if (path.contains(".jpg") || path.contains(".png")
+				|| path.contains(".PNG") || path.contains(".JPEG")
+				|| path.contains(".jpeg") || path.contains(".JPG")
+				|| path.contains(".bmp") || path.contains(".BMP")) {
 			final ImageView quadrado = new ImageView(context);
-			Picasso.with(context).load("file:///"+path).resize(300, 300).into(quadrado);			
-			
+			Picasso.with(context).load("file:///" + path).resize(300, 300)
+					.into(quadrado);
+
 			quadrado.setOnClickListener(new OnClickListener() {
-				
+
 				@Override
 				public void onClick(View arg0) {
 					ImageView view = new ImageView(quadrado.getContext());
@@ -122,23 +121,26 @@ public class Conteudo {
 			return quadrado;
 
 		} else if (path.contains(".3gp") || path.contains(".mp4")) {
-			final VideoView video = new VideoView(context);
-			final MediaController controller = new MediaController(context);
+			final ImageView img = new ImageView(context);
 
-			video.setMediaController(controller);
-			video.setLayoutParams(new AbsListView.LayoutParams(300, 300));
-			video.setVideoPath(path);
-			result = video;
-			video.setOnTouchListener(new OnTouchListener() {
+			Bitmap bMap = ThumbnailUtils.createVideoThumbnail(path,
+					MediaStore.Video.Thumbnails.MINI_KIND);
+			img.setImageResource(R.drawable.mp_logo);
+			
+			img.setBackground(new BitmapDrawable(context.getResources(), bMap));
+			Picasso.with(context).load("file:///" + path).resize(300, 300)
+			.into(img);
+			
+			result = img;
+			img.setOnClickListener(new OnClickListener() {
 
 				@Override
-				public boolean onTouch(View arg0, MotionEvent arg1) {
-					VideoView vd = new VideoView(video.getContext());
+				public void onClick(View arg0) {
+					VideoView vd = new VideoView(img.getContext());
 					vd.setVideoPath(path);
-					vd.setMediaController(controller);
+					vd.start();
 					ActivityFragment.preso.setContentView(vd);
 					ActivityFragment.preso.show();
-					return false;
 				}
 			});
 
@@ -147,7 +149,5 @@ public class Conteudo {
 		return result;
 
 	}
-	
-	
 
 }

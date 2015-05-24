@@ -45,6 +45,7 @@ public class ContApresDao {
 	 */
 	public void saveChamados(List<Conteudo> imagens) {
 		ContentValues values = new ContentValues();
+		imagens = limparLista(imagens);
 		try {
 			for (int im = 0; im < imagens.size(); im++) {
 
@@ -66,6 +67,25 @@ public class ContApresDao {
 
 	}
 
+	private List<Conteudo> limparLista(List<Conteudo> imagens){
+		List<Conteudo> tmpList = getItens(imagens.get(0).getIdApreds());
+		
+		Log.e("Inicio", imagens.size() + " tamanho inicial");
+		
+		for (int i = 0; i < tmpList.size(); i++){
+			for (int j = 0; j < imagens.size(); j++){
+				if (tmpList.get(i).getPath().equals(
+						imagens.get(j).getPath())){
+					imagens.remove(j);
+				} 
+			}
+		}
+		
+		Log.e("Fim", imagens.size() + " Tamanho final");
+		
+		return imagens;
+	}
+	
 	public static String onUpgrade() {
 		return "DROP TABLE IF EXISTS imagens";
 	}

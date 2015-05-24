@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.media.ThumbnailUtils;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -13,8 +14,8 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
-import android.widget.VideoView;
 import br.com.telas.ActMove;
+import br.com.telas.R;
 
 public class LoadComponent implements OnClickListener{
 
@@ -50,7 +51,10 @@ public class LoadComponent implements OnClickListener{
 			Bitmap bMap = ThumbnailUtils
 					.createVideoThumbnail(comp,
 							MediaStore.Video.Thumbnails.MICRO_KIND);
-			((ImageView) img).setImageBitmap(bMap);
+			
+			bMap = Bitmap.createScaledBitmap(bMap, 200, 200, false);
+			((ImageView) img).setImageResource(R.drawable.mp_logo);
+			((ImageView) img).setBackground(new BitmapDrawable(group.getResources(), bMap));
 			((ImageView) img).setTag(comp);
 			group.addView(img);
 		}
