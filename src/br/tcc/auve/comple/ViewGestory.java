@@ -16,7 +16,7 @@ public class ViewGestory extends ImageView implements OnTouchListener,
 		OnScaleGestureListener, OnLongClickListener {
 
 	private View view;
-	private float scaleFactor = 1f;
+
 	private ScaleGestureDetector mDetector;
 
 	public ViewGestory(Context context) {
@@ -73,45 +73,6 @@ public class ViewGestory extends ImageView implements OnTouchListener,
 		mDetector.onTouchEvent(event);
 		performClick();
 
-//		int x = (int) event.getX();
-//		int y = (int) event.getY();
-//
-//		if (event.getAction() == MotionEvent.ACTION_MOVE) {
-//			isSelected();
-//			int velocidade = 0;
-//			int velocidadeY = 0;
-//			if (x > 0) {
-//				velocidade = (x - (getWidth() / 2));
-//			} else {
-//		
-//				velocidade *= -1;
-//			}
-//			if (y > 0) {
-//				velocidadeY = (y - (getHeight() / 2));
-//			} else {
-//				velocidadeY *= -1;
-//			}
-//
-//			if (x > getWidth() / 2) {
-//				setTranslationX(getX() + velocidade);
-//			
-//			}
-//			if (x < getWidth() / 2) {
-//				setTranslationX(getX() - (-velocidade));
-//			
-//			}
-//
-//			if (y > getHeight() / 2) {
-//				setTranslationY(getY() + velocidadeY);
-//				
-//			}
-//
-//			if (y < getHeight() / 2) {
-//				setTranslationY(getY() - (-velocidadeY));
-//				
-//			}
-//
-//		}
 
 		return true;
 	}
@@ -120,18 +81,7 @@ public class ViewGestory extends ImageView implements OnTouchListener,
 
 	@Override
 	public boolean onScale(ScaleGestureDetector detector) {
-//		scaleFactor *= detector.getScaleFactor();
-//		scaleFactor = Math.max(0.1f, Math.min(scaleFactor, 10.0f));
-//		
-//		view.setScaleX(scaleFactor);
-//		view.setScaleY(scaleFactor);
-//
-//		view.getLayoutParams().height =
-//				 (int) (view.getHeight() * scaleFactor);
-//		
-//		view.getLayoutParams().width =
-//				 (int) (view.getWidth() * scaleFactor);
-//		
+
 		return true;
 	}
 

@@ -44,6 +44,7 @@
         android:layout_below="@+id/imageView1"
         android:layout_toLeftOf="@+id/imageView1"
         android:background="@null"
+        android:onClick="opcoes"
         android:src="@drawable/pessoas" />
 
     <ImageButton

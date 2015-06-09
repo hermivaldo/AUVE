@@ -40,6 +40,7 @@
         android:layout_below="@+id/imageView1"
         android:layout_marginLeft="88dp"
         android:background="@null"
-        android:src="@drawable/pessoas" />
+        android:src="@drawable/pessoas"
+        android:onClick="opcoes" />
 
 </RelativeLayout>

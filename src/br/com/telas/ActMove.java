@@ -19,9 +19,12 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
+import br.com.banco.TutorialDAO;
 import br.com.controlebanco.InserirApren;
+import br.com.entidades.Configuracao;
 import br.com.fileexplorer.FileChoose;
 import br.com.refac.ViewStatica;
+import br.com.tutorial.TutorialActMove;
 import br.tcc.auve.comple.ListViewPreviewFolder;
 import br.tcc.auve.regras.Alert;
 import br.tcc.auve.regras.LoadComponent;
@@ -30,7 +33,7 @@ import br.tcc.auve.regras.LoadComponent;
 public class ActMove extends Activity {
 
 	public static final int REQUEST_PATH = 1;
-	private ViewGroup mGroup;
+	
 	public static View mViewSelected;
 
 	public static DrawerLayout mDrawerLayout;
@@ -38,6 +41,7 @@ public class ActMove extends Activity {
 
 	private String identApresent = "";
 
+	TutorialDAO tdDAO;
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -47,25 +51,23 @@ public class ActMove extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-
+		
 		super.onCreate(savedInstanceState);
 
-		mGroup = (ViewGroup) findViewById(android.R.id.content);
-
-		getLayoutInflater().inflate(R.layout.la_actmove, mGroup);
-
+		setContentView(R.layout.la_actmove);
+		tdDAO = new TutorialDAO(this);
+		
+		if (tdDAO.getStatus().size() == 0){
+			new TutorialActMove(this);
+		}
+		
 	}
 
 	@Override
 	protected void onResume() {
 
 		super.onResume();
-		/*
-		 * Permite a verificação apenas se for uma instância de ViewGroup o
-		 * elemento static não pode ser utilizado antes de alguma opção do menu
-		 * ter sido chamada. O fato de utilizar dois && fazem com que se a
-		 * primeira opção for falsa a não execute a próxima.
-		 */
+	
 		if (ViewStatica.getViewGroup() instanceof ViewGroup) {
 			ViewGroup pai = (ViewGroup) findViewById(R.id.reP);
 			pai.addView(ViewStatica.getViewOri());
@@ -118,8 +120,8 @@ public class ActMove extends Activity {
 			alertSalvar(item);
 			break;
 		case R.id.atualizar:
-			new Alert().alerta(this, "Salvar Apresentação", "A apresentação está sendo "
-					+ "salva no dispositivo.");
+			new Alert().alerta(this, "Salvar Apresentação",
+					"A apresentação está sendo " + "salva no dispositivo.");
 			alertSalvar(item);
 			break;
 		default:
@@ -154,10 +156,13 @@ public class ActMove extends Activity {
 
 	private void alertSalvar(final MenuItem item) {
 		final EditText text = new EditText(getBaseContext());
-		if (((ViewGroup) findViewById(R.id.tela)).getChildCount() == 0){
-			Toast.makeText(getApplicationContext(), "Não é possível salvar"
-					+ " apresentação, pois não existe conteúdo para armazenar..", Toast.LENGTH_LONG).show();		
-		}else	if (identApresent.isEmpty()) {
+		if (((ViewGroup) findViewById(R.id.tela)).getChildCount() == 0) {
+			Toast.makeText(
+					getApplicationContext(),
+					"Não é possível salvar"
+							+ " apresentação, pois não existe conteúdo para armazenar..",
+					Toast.LENGTH_LONG).show();
+		} else if (identApresent.isEmpty()) {
 
 			new AlertDialog.Builder(this, AlertDialog.THEME_HOLO_DARK)
 					.setTitle("Salvar Apresentação")
@@ -166,22 +171,29 @@ public class ActMove extends Activity {
 					.setPositiveButton("Salvar", new OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
+
+							ViewStatica
+									.setViewGroup((ViewGroup) findViewById(R.id.tela));
+							InserirApren inserAp = new InserirApren(
+									ActMove.this);
+							// Definir o nome da apresentação para ser
+							// localizada,
+							// depois
+							// para poder realizar o Update da apresentação.
+							identApresent = text.getText().toString();
+							inserAp.inserirApre(identApresent);
+							// Remove e adiciona o conteúdo apenas se salvo
+							// no
+							// sistema.
+							item.setVisible(false);
+							menu.getItem(3).setVisible(true);
 							
-								ViewStatica
-										.setViewGroup((ViewGroup) findViewById(R.id.tela));
-								InserirApren inserAp = new InserirApren(
-										ActMove.this);
-								// Definir o nome da apresentação para ser
-								// localizada,
-								// depois
-								// para poder realizar o Update da apresentação.
-								identApresent = text.getText().toString();
-								inserAp.inserirApre(identApresent);
-								// Remove e adiciona o conteúdo apenas se salvo
-								// no
-								// sistema.
-								item.setVisible(false);
-								menu.getItem(3).setVisible(true);
+							/*
+							 * Controle de menu, após salvar a primeira vez, 
+							 * o sistema deixa de apresentar o sistema de menu
+							 */
+							TutorialDAO dao = new TutorialDAO(ActMove.this);
+							dao.insetConfig(new Configuracao("1"));
 
 						}
 					}).setNegativeButton("Cancelar", new OnClickListener() {
@@ -199,4 +211,10 @@ public class ActMove extends Activity {
 
 	}
 
+	@Override
+	public void onBackPressed() {
+		((ViewGroup) findViewById(R.id.tela)).removeAllViews();
+		super.onBackPressed();
+	}
+	
 }
